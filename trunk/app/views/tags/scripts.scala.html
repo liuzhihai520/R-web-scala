@@ -1,0 +1,4 @@
+@(scripts: scala.collection.mutable.Map[String, Int])
+@for(script <- scripts.toList.sortBy(_._2)) {
+    <script type="text/javascript" src="@routes.Assets.versioned(script._1)"></script>
+}

@@ -1,0 +1,164 @@
+.w980{
+	width:100%;
+	padding:50px 0;
+	display:none;
+}
+.w980 .container {
+	width: 980px;
+	margin:0 auto;
+	min-width:980px;
+}
+.w980 h2 {
+	font-size:16px;
+}
+.w980 h2 span{
+	color:#d81224;
+}
+.w980 p {
+	margin:0;
+}
+
+#FAQ_center .container {
+	width:760px;
+	margin: 0 auto;
+	min-width:760px;
+}
+#FAQ_center_tab {
+	border-bottom:1px solid #f0f0f0;
+	margin-bottom:60px;
+}
+#FAQ_center_tab a {
+	font-size:16px;
+	color:#828282;
+	text-decoration:none;
+	padding:0 20px;
+}
+#FAQ_center_tab a.active {
+	color:#ffb200;
+	border-bottom:3px solid #ffb200;
+}
+.FAQ_center_con {
+	display:none;
+}
+.content{
+	background:#fff;
+	color:#6c6c6c;
+}
+.FAQ_banner{
+	background:url(../../images/FAQ_banner.jpg) no-repeat center center;
+	height:550px;
+}
+.FAQ_guidance_bar {
+	background: rgb(247,247,247);
+	height:195px;
+	text-align: center;
+	padding-top:35px;
+}
+.guidance_item {
+	color: #000;
+	display: inline-block;
+	height: 100%;
+	width:90px;
+	margin: 0 90px;
+	vertical-align: middle;
+	position:relative;
+}
+.guidance_item .icon {
+	background: rgba(0, 0, 0, 0) url(../../images/FAQ_icon.png) repeat scroll 0 0;
+	display: inline-block;
+	height: 90px;
+	margin-right: 5px;
+	vertical-align: middle;
+	width: 90px;
+	margin-bottom:10px;
+}
+.active .icon {
+	background: rgba(0, 0, 0, 0) url(../../images/FAQ_icon_hover.png) repeat scroll 0 0;
+}
+.guidance_item.active:after{
+	content:'';
+	position:absolute;
+	width: 0;
+	height: 0;
+	bottom:0;
+	left:20px;
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	border-bottom: 25px solid #fff;
+}
+.guidance_item .icon.icon_FAQ{
+	background-position:0px -12px;
+}
+.guidance_item .icon.icon_agreement{
+	background-position:-272px -12px;
+}
+.guidance_item .icon.icon_law{
+	background-position:-544px -12px;
+}
+.guidance_item .icon.icon_risk_warning{
+	background-position:-817px -12px;
+}
+.active .icon.icon_FAQ{
+	background-position:0px 0px;
+}
+.active .icon.icon_agreement{
+	background-position:-272px 0;
+}
+.active .icon.icon_law{
+	background-position:-544px 0;
+}
+.active .icon.icon_risk_warning{
+	background-position:-817px 0;
+}
+.content p{
+	text-indent:2em;
+}
+.content .faq_dl{
+	margin-bottom:40px;
+}
+.content .faq_dl dt{
+	font-size:16px;
+	color:#000;
+	margin-bottom:20px;
+	position:relative;
+}
+.content .faq_dl dt:before{
+	content:'问';
+	position:absolute;
+	background:#ffab18;
+	width:28px;
+	height:28px;
+	border-radius:100%;
+	line-height:28px;
+	text-align:center;
+	color:#fff;
+	left:-45px;
+	top:0;
+}
+.content .faq_dl dd{
+	background:rgb(247,247,247);
+	padding:20px 10px;
+	border-radius:8px;
+}
+.faq_dl p{
+	text-indent:0;
+}
+.faq_content_list_1{
+	list-style:none;
+	padding:0;
+}
+
+dd li {
+	text-indent: 2em;
+	padding: 6px;
+	line-height: 2.0;
+}
+.danger-info p {
+	text-indent: 2em;
+	padding: 6px;
+	line-height: 2.0;
+}
+body {
+	max-width: 1920px;
+	margin: 0 auto;
+}

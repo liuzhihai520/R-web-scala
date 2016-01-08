@@ -1,0 +1,350 @@
+@import play.api.libs.json.JsValue
+@(typeList:List[model.TypeClass],publishForm:Form[form.ProjectForm],key:JsValue)(implicit data: core.mvc.ViewData[_])
+@data.style("stylesheets/css/startProject.css")(0)
+@data.script("javascripts/webuploader/webuploader.flashonly.js")(0)
+@data.script("javascripts/ckeditor/ckeditor.js")(1)
+@data.script("javascripts/ckeditor/config.js")(2)
+@data.script("javascripts/js/project/project.js?v=99999999")(3)
+@data.script("javascripts/js/project/uploadImg.js")(4)
+@data.script("javascripts/js/project/uploadFile.js")(5)
+@main {
+    <div class='content'>
+        <div class='container'>
+            <div class='step_nav'>
+                <div class='nav_item checked'>项目信息</div>
+                <div class='nav_item'>公司信息</div>
+                <div class='nav_item'>完成</div>
+            </div>
+            <input type="hidden" value="@key" id="key"/>
+            <form action="/updateProject" id="form" name="form" method="post">
+                <div class='step_main step_1'>
+                    <p class='step_title'>项目信息</p>
+                    <div class='position_prefix'>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <input type="hidden" id="id" name="id" value="@publishForm("id").value.getOrElse(0)"/>
+                                <div class='col-xs-4 ta_r'>项目名称：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <input class="form-control" id="name" name="name" value="@publishForm("name").value"/>
+                                    </p>
+                                    @{
+                                        if(publishForm("name").hasErrors){
+                                                <p class="error_msg" id="nameError">请输入项目名</p>
+                                        }else{
+                                                <p class="error_msg" id="nameError"></p>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>标签：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <input class="form-control" id="tag" name="tag" maxlength="50" value="@publishForm("tag").value"/>
+                                    </p>
+                                    @{
+                                        if(publishForm("tag").hasErrors){
+                                                <p class="error_msg" id="tagError">标签应为2-16</p>
+                                        }else{
+                                                <p class="error_msg" id="tagError"></p>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>项目所属行业：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <select class="form-control" id="typeid" name="typeid">
+                                        @for(i <- typeList){
+                                            @if(publishForm("typeid").value.getOrElse("0").toLong == i.id){
+                                                <option value="@i.id" selected="selected">--@{i.name}--</option>
+                                            }else{
+                                                <option value="@i.id">--@{i.name}--</option>
+                                            }
+                                        }
+                                        </select>
+                                    </p>
+                                    @if(publishForm("typeid").hasErrors){
+                                        <p class="error_msg" id="typeidError">请选择行业</p>
+                                    }else{
+                                        <p class="error_msg" id="typeidError"></p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>行业描述：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <textarea class="form-control" rows='3' id="tradedescription" name="tradedescription">@publishForm("tradedescription").value</textarea>
+                                    </p>
+                                    <p class="error_msg" id="tradedescriptionError"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>项目所处阶段：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <select class="form-control" id="projectstage" name="projectstage">
+                                            @if(publishForm("projectstage").value.getOrElse("") == "为正式启动"){
+                                                <option value="未正式启动" selected="selected">--未正式启动--</option>
+                                            }else{
+                                                <option value="未正式启动">--未正式启动--</option>
+                                            }
+                                            @if(publishForm("projectstage").value.getOrElse("") == "产品研发中"){
+                                                <option value="产品研发中" selected="selected">--产品研发中--</option>
+                                            }else{
+                                                <option value="产品研发中">--产品研发中--</option>
+                                            }
+                                            @if(publishForm("projectstage").value.getOrElse("") == "开发完毕"){
+                                                <option value="开发完毕" selected="selected">--开发完毕--</option>
+                                            }else{
+                                                <option value="开发完毕">--开发完毕--</option>
+                                            }
+                                            @if(publishForm("projectstage").value.getOrElse("") == "产品开发完毕但没有收入"){
+                                                <option value="产品开发完毕但没有收入" selected="selected">--产品开发完毕但没有收入--</option>
+                                            }else{
+                                                <option value="产品开发完毕但没有收入">--产品开发完毕但没有收入--</option>
+                                            }
+                                            @if(publishForm("projectstage").value.getOrElse("") == "已运作有收入"){
+                                                <option value="已运作有收入" selected="selected">--已运作有收入--</option>
+                                            }else{
+                                                <option value="已运作有收入">--已运作有收入--</option>
+                                            }
+                                            @if(publishForm("projectstage").value.getOrElse("") == "已运作有盈利"){
+                                                <option value="已运作有盈利" selected="selected">--已运作有盈利--</option>
+                                            }else{
+                                                <option value="已运作有盈利">--已运作有盈利--</option>
+                                            }
+                                        </select>
+                                    </p>
+                                    <p class="error_msg" id="projectstageError"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>融资金额（万元）：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <input class="form-control" id="financingsum" name="financingsum" value="@publishForm("financingsum").value" onkeyup="sumEquity()"/>
+                                    </p>
+                                    @{
+                                        if(publishForm("financingsum").hasErrors){
+                                                <p class="error_msg" id="financingsumError">输入的融资金额不正确</p>
+                                        }else{
+                                                <p class="error_msg" id="financingsumError"></p>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>注册资本（万元）：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <input class="form-control" id="regcapital" name="regcapital" value="@publishForm("regcapital").value" onkeyup="sumEquity()"/>
+                                    </p>
+                                    @{
+                                        if(publishForm("regcapital").hasErrors){
+                                                <p class="error_msg" id="regcapitalError">输入的注册资本金额不正确</p>
+                                        }else{
+                                                <p class="error_msg" id="regcapitalError"></p>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>起投金额（万元）：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <input class="form-control" id="startnum" name="startnum" value="@publishForm("startnum").value" />
+                                    </p>
+                                    @{
+                                        if(publishForm("startnum").hasErrors){
+                                                <p class="error_msg" id="startnumError">起投金额应为大于0</p>
+                                        }else{
+                                                <p class="error_msg" id="startnumError"></p>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>每股价格（元）：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <input class="form-control" id="shares" name="shares" value="@publishForm("shares").value" onkeyup="sumEquity()"/>
+                                    </p>
+                                    @{
+                                        if(publishForm("shares").hasErrors){
+                                                <p class="error_msg" id="sharesError">每股价格必须大0</p>
+                                        }else{
+                                                <p class="error_msg" id="sharesError"></p>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>融资用途：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <textarea class="form-control" rows='3' id="use" name="use">@publishForm("use").value</textarea>
+                                    </p>
+                                    @{
+                                        if(publishForm("use").hasErrors){
+                                                <p class="error_msg" id="useError">融资用途为4-20个字符</p>
+                                        }else{
+                                                <p class="error_msg" id="useError"></p>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>融资金额股份(股权)占比(%)：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <input class="form-control" placeholder="请以百分比格式 例：“10%”" id="equity" name="equity" value="@publishForm("equity").value" readonly/>
+                                    </p>
+                                    @{
+                                        if(publishForm("equity").hasErrors){
+                                                <p class="error_msg" id="equityError">股份为1-100之间的数字</p>
+                                        }else{
+                                                <p class="error_msg" id="equityError"></p>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>报名期限：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <input class="form-control" placeholder="最低限制30天" id="financingterm" name="financingterm" value="@publishForm("financingterm").value"/>
+                                    </p>
+                                    <p class="error_msg" id="financingtermError"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>首页展示图片：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <span>
+                                            <div id="uploader" style="width:30%">
+                                                    <!--用来存放文件信息-->
+                                                <div id="thelist" class="uploader-list"></div>
+                                                <div class="btn upload_btn">
+                                                    <div id="picker">选择文件</div>
+                                                </div>
+                                            </div>
+                                        </span>
+                                        <span class='upload_ex'>支持jpg、jpeg、png、gif格式，大小：640x640px/2M</span>
+                                    </p>
+                                </div>
+                                <div class='col-xs-8 col-xs-offset-4'>
+                                    <div class='preview_container img_center_middle'><img id="imgView" src="@data.static/@publishForm("imgurl").value"/></div>
+                                    <input type="hidden" id="imgurl" name="imgurl" value="@publishForm("imgurl").value"/>
+                                    @{
+                                        if(publishForm("imgurl").hasErrors){
+                                                <p class="error_msg" id="imgurlError">请上传项目图片</p>
+                                        }else{
+                                                <p class="error_msg" id="imgurlError"></p>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>商业计划书：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <span>
+                                            <div style="width:30%">
+                                                <!--用来存放文件信息-->
+                                                <div id="fileList" class="uploader-list"></div>
+                                                <div class="btn upload_btn">
+                                                    <div id="filePicker">选择文件</div>
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </p>
+                                    <input type="hidden" id="plan" name="plan" value="@publishForm("plan").value"/>
+                                    @{
+                                        if(publishForm("plan").hasErrors){
+                                                <p class="error_msg" id="planError">请上传商业计划书</p>
+                                        }else{
+                                                <p class="error_msg" id="planError"></p>
+                                        }
+                                    }
+                                    <p class='upload_ex no-wrap'>请选择PPT、PPTX、PDF文件，文件大小不要超过20M 点击<a href="javascript:;">下载睿就投商业计划书模板</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>项目简介：</div>
+                            </div>
+                            <div class='row whole_width'>
+                                <div class='col-xs-12'>
+                                    <div class="input_field center_block">
+                                        <textarea class="form-control ib" rows='3' id="synopsis" name="synopsis">@publishForm("synopsis").value</textarea>
+                                        @{
+                                            if(publishForm("synopsis").hasErrors){
+                                                    <p class="error_msg" id="synopsisError">项目简介应为10-100个字符</p>
+                                            }else{
+                                                    <p class="error_msg" id="synopsisError"></p>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>项目详细：</div>
+                            </div>
+                            <div class='row whole_width'>
+                                <div class='col-xs-12'>
+                                    <div class="input_field center_block">
+                                        <textarea class="form-control ib" rows='3' id="description" name="description" style="width:618px;height:240px;">@Html(publishForm("description").value.getOrElse(""))</textarea>
+                                        @{
+                                            if(publishForm("description").hasErrors){
+                                                    <p class="error_msg" id="descriptionError">项目描述应为10-100个字符</p>
+                                            }else{
+                                                    <p class="error_msg" id="descriptionError"></p>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class='ta_c'>
+                        <button type="button" class='btn submit_btn' id="sub">提交</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+}

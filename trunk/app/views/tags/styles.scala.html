@@ -1,0 +1,4 @@
+@(styles: scala.collection.mutable.Map[String, Int])
+@for(style <- styles.toList.sortBy(_._2)) {
+    <link rel="stylesheet" href="@routes.Assets.versioned(style._1)" />
+}

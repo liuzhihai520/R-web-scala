@@ -1,0 +1,35 @@
+@(content: Html)(implicit data: core.mvc.ViewData[_],lang:Lang)
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>睿就投</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="renderer" content="webkit">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/weblogo.png")">
+        <link href="@routes.Assets.versioned("stylesheets/css/bootstrap.min.css")" rel="stylesheet">
+        <link href="@routes.Assets.versioned("stylesheets/css/common.css")" rel="stylesheet">
+        <style>
+        #bdshare_weixin_qrcode_dialog_qr{padding:5px};
+        </style>
+        @views.html.tags.styles(data.styles)
+        <script src="@routes.Assets.versioned("javascripts/js/jquery.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("javascripts/js/common.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("javascripts/js/component.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("javascripts/js/bootstrap.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("javascripts/js/static.js")" type="text/javascript"></script>
+        <script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true" xmlns="http://www.w3.org/1999/html"></script>
+        @views.html.tags.scripts(data.scripts)
+    </head>
+    <body>
+        @views.html.common.header()
+        @content
+        @views.html.common.footer()
+    </body>
+    <script>
+        $(function(){
+            $("#bdshare_weixin_qrcode_dialog").attr("style","");
+        });
+    </script>
+</html>

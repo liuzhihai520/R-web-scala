@@ -1,0 +1,66 @@
+.content{
+	background:url(../../images/login_bg.jpg)  no-repeat center center;
+	height:670px;
+	padding-top:110px;
+}
+.main_box{
+	width:935px;
+	height:500px;
+	background:rgba(255,255,255,0.83);
+	border-radius:8px;
+	margin:0 auto;
+	overflow:hidden;
+	position:relative;
+}
+.login_box,.regist_box,.forgetpwd_box{
+	height:100%;
+	padding:30px 60px;
+}
+.box_title{
+	font-size:18px;
+	color:#4d4d4d;
+}
+.main_box .form-group {
+	margin-bottom:0;
+}
+.main_box .form-control,.main_box .btn{
+	height:40px;	
+}
+.error_msg{
+	margin-bottom:0;
+	height:20px;
+	line-height:20px;
+    color: red;
+}
+.box_title{
+	margin-bottom:30px;
+}
+.box_control{
+	margin-top:20px;
+}
+.box_control a{
+	color:#505050;
+}
+.main_box  .form-block-inline{
+	display:inline-block;
+	width:160px;
+	vertical-align:top;
+}
+.main_box  .form-block-inline1{
+	display:inline-block;
+}
+.main_box  .input_field{
+	max-height:40px;
+	margin:0;
+}
+.main_box .checkbox{
+	margin:0;
+}
+.break_line{
+	height:390px;
+	width:1px;
+	background:#c9c9c9;
+	position:absolute;
+	top:20px;
+	left:468px;
+}

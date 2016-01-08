@@ -1,0 +1,497 @@
+@(member:model.ItemMember,classList:List[model.TypeClass],itemMain:model.MainInfo,isMain:Int,item:Option[model.ItemProject],investList:List[model.Invest],isInvest:Int,demo:Option[model.Demo],jobList:List[model.TypeClass],investMoney:Double)(implicit data: core.mvc.ViewData[_])
+@import org.joda.time.DateTime
+@data.style("stylesheets/css/page980.css")(0)
+@data.style("stylesheets/css/project.css")(1)
+@data.style("stylesheets/css/home.css")(2)
+@data.script("javascripts/js/jquery.cookie.js")(0)
+@data.script("javascripts/js/component.js")(1)
+@data.script("javascripts/js/tipBox.js")(2)
+@data.script("javascripts/js/zclip/jquery.zclip.js")(3)
+@data.script("javascripts/js/eyes/zepto.custom.js")(4)
+@data.script("javascripts/js/eyes/hideShowPassword.min.js")(5)
+@data.script("javascripts/js/eyes/modernizr.custom.js")(6)
+@data.script("javascripts/js/project/projectMain.js")(7)
+@main{
+    <div class='content project_investor'>
+        <div class='wrapper clearfix'>
+            <input type="hidden" id="webURL" value="http://www.ruijiutou.com/isMainInfo/@item.get.id"/>
+            <input type="hidden" id="projectId" value="@item.get.id"/>
+            <input type="hidden" id="projectName" value="@item.get.name"/>
+            <input type="hidden" id="phoneNum" value="@data.identity.tel"/>
+            <h2 class='project_name'>@item.get.name</h2>
+            <p class='project_info'>
+                <span class='info_item location'><i class='icon icon_location'></i>@item.get.location</span>
+                <span class='info_item industry'><i class='icon icon_tag top-1'></i>@item.get.tag</span>
+            </p>
+            <h3 class='project_des'>@Html(item.get.synopsis.getOrElse(""))</h3>
+            <div class='page980_main_box project_main_box clearfix'>
+                <div class='img_container'>
+                    <img src='@data.static/@item.get.imgurl'>
+                </div>
+                <div class='content_container'>
+                    <p class='status_item'>@if(item.get.sign != 0){报名人数：@{item.get.sign}人}</p>
+                    <p class='status_item'>计划融资：<big>@{item.get.financingsum}</big>万元</p>
+                    <p class='status_item'>已认购金额：<big>@{item.get.financingamount}</big>万元</p>
+                    <p class='status_item'>起投金额：<big>@item.get.startnum.getOrElse(0)</big>万元</p>
+                    <p class='status_item'>
+                        报名剩余：
+                        @if(item.get.status.equals("5") || (item.get.endtime.get.getMillis - System.currentTimeMillis()) < 0){
+                            <big>0</big>天
+                        }else{
+                            <big>@item.get.day</big>天
+                        }
+                    </p>
+                    <div class='process_bar' data-value='@{item.get.schedules}'>
+                        <div class='current'></div>
+                    </div>
+                    <p class='process_bar_tag'>已融：@{item.get.schedules}%</p>
+                    <div class='row operation_group'>
+                        <div class='col-xs-6'>
+                        @if(item.get.status.equals("5") || (item.get.endtime.get.getMillis - System.currentTimeMillis()) < 0){
+                            <a class='btn btn-block btn-gray enter_btn disabled' href="javascript:;">报名结束</a>
+                        }else{
+                            @if(isInvest == 0){
+                                <a class='btn btn-block btn-orange enter_btn' id="signUp" href="javascript:;">立即报名</a>
+                            }else{
+                                <a class='btn btn-block btn-gray enter_btn' id="gaveUp" href="javascript:;">取消报名</a>
+                            }
+                        }
+                        </div>
+                        <div class='col-xs-6'>
+                            <a class='btn btn-block btn-green invitation' id="investBtn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;邀请</a>
+                        </div>
+                    </div>
+
+                    <div class="share" id="share">
+                        <div id="shareSpan"><span>分享：&nbsp;</span></div>
+                        <div class="bdsharebuttonbox">
+                            <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+                            <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+                            <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                            <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+                        </div>
+                        <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"@{item.get.name}-来自于@Html("@睿就投")","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+                    </div>
+                    @{
+                        if(item.get.status.equals("1")){
+                                <div class='status_tag'><span>审核中</span></div>
+                        }else if(item.get.status.equals("2")){
+                                <div class='status_tag'><span>审核通过</span></div>
+                        }else if(item.get.status.equals("4") && (item.get.endtime.get.getMillis - System.currentTimeMillis()) > 0){
+                                <div class='status_tag'><span>融资中</span></div>
+                        }else if(item.get.status.equals("5") || (item.get.endtime.get.getMillis - System.currentTimeMillis()) < 0){
+                                <div class='status_gray'><span>已结束</span></div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class='wrapper investor_form'>
+            <div class='row user_center_nav' id="user_nav">
+                @if(0==isMain){
+                    <div class='col-xs-6 nav_item active'><a href="javascript:;">领投</a></div>
+                    <div class='col-xs-6 nav_item'><a href="javascript:;">跟投</a></div>
+                }else{
+                    <div class='col-xs-12 nav_item active'><a href="javascript:;">跟投</a></div>
+                }
+            </div>
+            @if(0==isMain){
+                <div class='step_main step_2' style="display:block;">
+                    <div class='position_prefix'>
+                        <div class="row invest_des">
+                            <p class="ta_c">平台最终会确定一个领投人，未能成为领投则自动成为跟投。</p>
+                        </div>
+                        <div class='step_row form-group necessary'>
+                            <input type="hidden" id="itemfinancingsum" name="itemfinancingsum" value="@{item.get.financingsum}"/>
+                            <div class='row'>
+                                <div class='col-xs-3 ta_r'>姓名：</div>
+                                <div class='col-xs-6'>
+                                    <p class="input_field">
+                                        <input type="hidden" id="name" name="name" value="@member.name.getOrElse("")"/>
+                                        @member.name
+                                    </p>
+                                    <p class="error_msg"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-3 ta_r'>性别：</div>
+                                <div class='col-xs-6'>
+                                    <p class="input_field">
+                                        <input type="hidden" id="sex" name="sex" value="@member.sex.getOrElse("")"/>
+                                        @member.sex.getOrElse("")
+                                    </p>
+                                    <p class="error_msg"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-3 ta_r'>出生年月：</div>
+                                <div class='col-xs-6'>
+                                    <p class="input_field">
+                                        <input type="hidden" id="sex" name="sex" value=" @member.birthday"/>
+                                        @member.birthday.getOrElse(new DateTime()).toString("yyyy-MM-dd")
+                                    </p>
+                                    <p class="error_msg"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class='step_row form-group'>
+                            <div class='row'>
+                                <div class='col-xs-3 ta_r'>学历：</div>
+                                <div class='col-xs-6'>
+                                    <p class="input_field">
+                                        <select class="form-control" id="educationid" name="educationid">
+                                        <option value="0">--请选择--</option>
+                                        @for(i <- classList){
+                                            @if(i.id == itemMain.educationid){
+                                                <option value="@i.id" selected="selected">--@i.name--</option>
+                                            }else{
+                                                <option value="@i.id">--@i.name--</option>
+                                            }
+                                        }
+                                        </select>
+                                    </p>
+                                    <p class="error_msg" id="educationidError"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class='step_row form-group necessary'>
+                        <div class='row'>
+                            <div class='col-xs-3 ta_r'>公司名称：</div>
+                            <div class='col-xs-6'>
+                                <p class="input_field">
+                                        <input type="text" class="form-control" id="pcname" name="pcname" value="@member.pcname.getOrElse("")" maxlength="50"/>
+                                </p>
+                                <p class="error_msg" id="pcnameError"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-3 ta_r'>公司资产(万元)：</div>
+                                <div class='col-xs-6'>
+                                    <p class="input_field">
+                                        <input type="text" class="form-control" id="pccapital" name="pccapital" value="@itemMain.pccapital" maxlength="50"/>
+                                    </p>
+                                    <p class="error_msg" id="pccapitalError"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class='step_row form-group'>
+                            <div class='row'>
+                                <div class='col-xs-3 ta_r'>公司职位：</div>
+                                <div class='col-xs-6'>
+                                    <p class="input_field">
+                                        <input type="hidden" id="job" name="job" value="@member.job.getOrElse(0)"/>
+                                        <select class="form-control" id="jobs" name="jobs">
+                                        <option value="0">--请选择--</option>
+                                        @for(i <- jobList){
+                                            @if(i.id == member.job.getOrElse(0)){
+                                                <option value="@i.id" selected="selected">--@i.name--</option>
+                                            }else{
+                                                <option value="@i.id">--@i.name--</option>
+                                            }
+                                        }
+                                        </select>
+                                    </p>
+                                    <p class="error_msg" id="jobError"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class='step_row form-group'>
+                            <div class='row'>
+                                <div class='col-xs-3 ta_r'>公司电话：</div>
+                                <div class='col-xs-6'>
+                                    <p class="input_field">
+                                        <input type="text" class="form-control" id="pctel" name="pctel" value="@itemMain.pctel.toString" maxlength="20"/>
+                                    </p>
+                                    <p class="error_msg" id="pctelError"></p>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-3 ta_r'>邮箱：</div>
+                                <div class='col-xs-6'>
+                                    <p class="input_field">
+                                            <input type="text" class="form-control" id="email" name="email" value="@member.email.getOrElse("")" max="50"/>
+                                    </p>
+                                    <p class="error_msg" id="emailError"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group'>
+                            <div class='row'>
+                                <div class='col-xs-3 ta_r'>年收入(万元)：</div>
+                                <div class='col-xs-6'>
+                                    <p class="input_field">
+                                        <input type="text" class="form-control" id="yearlysalary" name="yearlysalary" maxlength="10" value="@itemMain.yearlysalary">
+                                    </p>
+                                    <p class="error_msg" id="yearlysalaryError"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-3 ta_r'>过往投资过的项目/资金：</div>
+                                <div class='col-xs-6'>
+                                    <p class="input_field">
+                                        <textarea class="form-control" id="stranger" name="stranger" rows='3'maxlength="500">@itemMain.stranger</textarea>
+                                    </p>
+                                    <p class="error_msg" id="strangerError"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-3 ta_r'>工作经验：</div>
+                                <div class='col-xs-6'>
+                                    <p class="input_field">
+                                        <textarea class="form-control" id="worker" name="worker" rows='3'maxlength="500">@itemMain.worker</textarea>
+                                    </p>
+                                    <p class="error_msg" id="workerError"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group'>
+                            <div class='row'>
+                                <div class='col-xs-3 ta_r'>投资金额(万元)：</div>
+                                <div class='col-xs-6'>
+                                    <p class="input_field">
+                                        <input type="text" class="form-control" id="money" name="money" placeholder="至少是计划融资金额的10%" maxlength="10">
+                                    </p>
+                                    <p class="error_msg" id="moneyError"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group'>
+                            <div class='row'>
+                                <div class='col-xs-3 ta_r'>联系方式：</div>
+                                <div class='col-xs-6'>
+                                    <p class="input_field">
+                                        @if(data.isAuth){
+                                            @data.identity.tel.substring(0,3)***@data.identity.tel.substring(7,11)
+                                        }
+                                    <p class="error_msg"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group'>
+                            <div class='row'>
+                                <div class='col-xs-3 ta_r'>验证码：</div>
+                                <div class='col-xs-3'>
+                                    <p class="input_field">
+                                        <input class="form-control form-block-inline" id="signCode" name="signCode">
+                                    </p>
+                                </div>
+                                <div class='col-xs-3'>
+                                    <p class="input_field">
+                                        <button class="btn btn-block btn-orange form-block-inline" id="sendCodeBtn" onclick="signSendCode();">获取验证码</button>
+                                    </p>
+                                    <p class="error_msg" id="signCodeError"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row info_row'>
+                            <div class='col-xs-3 ta_r'></div>
+                            <div class='col-xs-6'>
+                                <p class="input_field">
+                                    <input type="checkbox" checked="checked" class="checkbox">
+                                    <span class='agreement'>阅读并同意
+                                        <a href="/FAQ/4/0" target="_blank">《投资风险声明书》</a>
+                                    </span>
+                                </p>
+
+                                <p class="error_msg"></p>
+                            </div>
+                        </div>
+                        <p class='ta_c'>
+                            <button type="button" class='btn submit_btn' id="investSub">确定</button>
+                        </p>
+                    </div>
+                </div>
+            }
+            <div class='step_main step_2'
+                @if(0<isMain){
+                    style="display:block;"
+                }
+            >
+                <div class='position_prefix'>
+                    <div class='step_row form-group necessary'>
+                        <div class='row'>
+                            <input type="hidden" id="startnum" name="startnum" value="@{item.get.startnum}"/>
+                            <div class='col-xs-3 ta_r'>姓名：</div>
+                            <div class='col-xs-6'>
+                                <p class="input_field">
+                                    <input type="hidden" id="name2" name="name2" value="@member.name.getOrElse("")"/>
+                                    @member.name.getOrElse("")
+                                </p>
+                                <p class="error_msg"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='step_row form-group necessary'>
+                        <div class='row'>
+                            <div class='col-xs-3 ta_r'>性别：</div>
+                            <div class='col-xs-6'>
+                                <p class="input_field">
+                                    <input type="hidden" id="sex2" name="sex2" value="@member.sex.getOrElse("")"/>
+                                    @member.sex.getOrElse("")
+                                </p>
+                                <p class="error_msg"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class='step_row form-group necessary'>
+                        <div class='row'>
+                            <div class='col-xs-3 ta_r'>公司名称：</div>
+                            <div class='col-xs-6'>
+                                <p class="input_field">
+                                @if(member.pcname.getOrElse("") != ""){
+                                    <input type="text" class="form-control" id="pcname2" name="pcname2" value="@member.pcname.getOrElse("")" readonly/>
+                                }else{
+                                    <input type="text" class="form-control" id="pcname2" name="pcname2" value="@member.pcname.getOrElse("")"/>
+                                }
+                                </p>
+                                <p class="error_msg" id="pcname2Error"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='step_row form-group'>
+                        <div class='row'>
+                            <div class='col-xs-3 ta_r'>公司职位：</div>
+                            <div class='col-xs-6'>
+                                <p class="input_field">
+                                    <input type="hidden" id="job2" name="job2" value="@member.job.getOrElse(0)"/>
+                                    <select class="form-control" id="jobs2" name="jobs2" @if(member.job.getOrElse(0)!=0){disabled="disabled"}>
+                                    <option value="0">--请选择--</option>
+                                    @for(i <- jobList){
+                                        @if(i.id == member.job.getOrElse(0)){
+                                            <option value="@i.id" selected="selected">--@i.name--</option>
+                                        }else{
+                                            <option value="@i.id">--@i.name--</option>
+                                        }
+                                    }
+                                    </select>
+                                </p>
+                                <p class="error_msg" id="job2Error"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='step_row form-group necessary'>
+                        <div class='row'>
+                            <div class='col-xs-3 ta_r'>邮箱：</div>
+                            <div class='col-xs-6'>
+                                <p class="input_field">
+                                    @if(member.email.getOrElse("") != ""){
+                                        <input class="form-control" id="email2" name="email2" value="@member.email.getOrElse("")" readonly/>
+                                    }else{
+                                        <input class="form-control" id="email2" name="email2" value="@member.email.getOrElse("")"/>
+                                    }
+                                </p>
+                                <p class="error_msg" id="email2Error"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='step_row form-group'>
+                        <div class='row'>
+                            <div class='col-xs-3 ta_r'>投资金额(万元)：</div>
+                            <div class='col-xs-6'>
+                                <p class="input_field">
+                                    <input class="form-control" id="money2" name="money2"  placeholder="跟投融资金额必须大于起投金额">
+                                </p>
+                                <p class="error_msg" id="money2Error"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='step_row form-group'>
+                        <div class='row'>
+                            <div class='col-xs-3 ta_r'>联系方式：</div>
+                            <div class='col-xs-6'>
+                                <p class="input_field">
+                                    @if(data.isAuth){
+                                        @data.identity.tel.substring(0,3)***@data.identity.tel.substring(7,11)
+                                    }
+                                <p class="error_msg" id="phoneNum2Error"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='step_row form-group'>
+                        <div class='row'>
+                            <div class='col-xs-3 ta_r'>验证码：</div>
+                            <div class='col-xs-3'>
+                                <p class="input_field">
+                                    <input class="form-control form-block-inline" id="signCode2" name="signCode2">
+                                </p>
+                            </div>
+                            <div class='col-xs-3'>
+                                <p class="input_field">
+                                    <button class="btn btn-block btn-orange form-block-inline" id="sendCodeBtn2" onclick="signSendCode();">获取验证码</button>
+                                </p>
+                                <p class="error_msg" id="signCode2Error"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='row info_row'>
+                        <div class='col-xs-3 ta_r'></div>
+                        <div class='col-xs-6'>
+                            <p class="input_field">
+                                <input type="checkbox" checked="checked" class="checkbox">
+                                <span class='agreement'>阅读并同意
+                                    <a href="/FAQ/4/0" target="_blank">《投资风险声明书》</a>
+                                </span>
+                            </p>
+                            <p class="error_msg"></p>
+                        </div>
+                    </div>
+                    <p class='ta_c'>
+                        <button class='btn submit_btn'id="investSub2">确定</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 邀请 -->
+    <div class='layer invitation' style="display:none">
+        <div class='layer_cover'></div>
+        <div class='layer_center'>
+            <div class='layer_main'>
+                <div class="close_btn"><img src="/assets/images/icon/close_btn.png" /></div>
+                <div class='layer_title ta_c'>
+                    <p>已经复制项目链接</p>
+                </div>
+                <p class='ta_c'><button class='btn btn-orange layer_submit'>确定</button></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 不正当竞争提示 -->
+    <div class='layer' style="display:none" id="investTips">
+        <div class='layer_cover'></div>
+        <div class='layer_center'>
+            <div class='layer_main'>
+                <div class="close_btn"><img src="/assets/images/icon/close_btn.png"/></div>
+                <div class='layer_title ta_c'>
+                    <p>1）将保500元认购保证金在2个工作日内汇至指定账户，
+                    将抵扣认购金额+解释文字</p>
+                    <p>2）若不愿支付保证金，则请在实名认证里上传
+                        资产证明文件确认后等待后台验证</p>
+                </div>
+                <p class='ta_c'><button class='btn btn-orange layer_submit' id="investSure">确定</button></p>
+            </div>
+        </div>
+    </div>
+}

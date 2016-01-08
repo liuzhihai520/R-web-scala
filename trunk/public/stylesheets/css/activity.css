@@ -1,0 +1,150 @@
+.activity_main_box{
+	height:290px;
+}
+.activity_info_item{
+	font-size:12px;
+	color:#313131;
+	margin-bottom:15px;
+}
+.activity_title{
+	font-size:24px;
+    font-weight:600;
+}
+.page980_pannel .main .pannel_title .title_main{
+	height:70px;
+	line-height:70px;
+	padding:0 20px;
+	font-size:22px;
+	border-bottom:1px solid #d0d0d0;
+}
+.page980_pannel .main .pannel_title .title_main small{
+	display:block;
+	text-align:right;
+	font-size:14px;
+	font-weight:normal;
+}
+.pannel_content{
+	
+}
+.applicant .table td{
+	border-top:0;
+	border-bottom:1px solid #ddd;
+	padding:15px 8px;
+}
+.applicant .ta_c{
+	margin-bottom:0;
+}
+.applicant .for_more{
+	color:#363636;
+}
+
+/* ��б� */
+.activity_list_main .container {
+    width:1202px;
+}
+.activity_list_main {
+   font-size:16px;
+    color:#545454;
+    padding:0 0 20px 16px;
+    background:#fdfdfd;
+}
+.activity_list_main .pos {
+    width:100%;
+    height:96px;
+    line-height:96px;
+}
+.activity_list_main .pos a {
+    font-size:16px;
+    color:#545454;
+}
+.activity_list {
+    overflow:hidden;
+    margin-bottom:150px;
+}
+.activity_item {
+    width:273px;
+    height:243px;
+    border:1px solid #e0e0e0;
+    float:left;
+    margin:0 20px 20px 0;
+    position:relative;
+    background:#fff;
+}
+
+ .activity_item .acti_img img {
+    width:271px;
+}
+.activity_item .acti_title {
+    margin:10px 0 15px 8px;
+}
+.activity_item .acti_title a {
+    font-size:16px;
+    color:#545454;
+    font-weight:bold;
+}
+.activity_item .acti_time {
+    margin-left:8px;
+    color:#aaa;
+    font-size:12px;
+
+}
+.activity_item .acti_state{
+    position:absolute;
+    top:0;
+    left:0;
+    width:75px;
+    height:30px;
+    color:#fff;
+    font-size:14px;
+    text-align:center;
+    line-height:30px;
+}
+.activity_item .acti_state.on{
+    background:#36d292;
+}
+.activity_item .acti_state.end{
+    background:#5c5c5c;
+}
+.page {
+   width:230px;
+   height:30px;
+   margin:0 auto;
+   font-size:12px;
+}
+.page li{
+   float:left;
+   margin-right:10px;
+   width:20px;
+   height:20px;
+   text-align:center;
+   line-height:20px;
+}
+.page li.prev, .page li.next{
+   width:auto;
+   height:auto;
+}
+.page li.prev{
+    margin-right:30px
+}
+.page li.next{
+    margin-left:20px
+}
+.page li.active{
+   background:#ffb321;
+   border-radius:50%;
+}
+.page li.active a{
+   color:#fff;
+}
+.page li a{
+    color:#828282;
+}
+.page li.last{
+   margin-right:0px;
+}
+.page li.prev, .page li.next{
+   float:left;
+}
+.page980_pannel .pannel_content p img {
+    max-width:100%;
+}

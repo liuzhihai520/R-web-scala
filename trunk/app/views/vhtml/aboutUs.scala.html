@@ -1,0 +1,176 @@
+@(trun:Int)(implicit data: core.mvc.ViewData[_])
+@data.style("stylesheets/css/aboutUs.css")(0)
+@data.script("javascripts/js/vhtml/About.js")(0)
+@main{
+    <div>
+        <img  width="100%" src="/assets/images/aboutUs_banner.jpg"/>
+    </div>
+    <div class='content'>
+        <input type="hidden" id="trun" value="@trun"/>
+        <div class='aboutUs_guidance_bar'>
+            <a class='guidance_item' href='#company_introducation'><span class='icon icon_intro'></span>公司介绍</a>
+            <a class='guidance_item' href='#team_management'><span class='icon icon_user'></span>管理团队</a>
+            <a class='guidance_item' href='#about_us'><span class='icon icon_cup'></span>联系我们</a>
+        </div>
+        <div id='company_introducation'>
+            <div class='container'>
+                <p class='title ta_c'><span class='guidance_item'><span class='icon icon_intro'></span>公司介绍</span></p>
+                <div class="company_intro_img">
+                    <img src="/assets/images/company_intro.jpg" />
+                </div>
+                <div class="company_intro">
+                    <p>睿就投在2015年11月成立于上海陆家嘴中心，作为中国领先专注于互联网股权融资平台，我们有着专业的团队，严谨的评审流程及交易制度，优良的投后服务，从平台，资源，人才等多方面支持企业发展，实现企业价值最大化。</p>
+                    <p>睿就投平台上线建立了严格的项目筛选和风控机制，对投资人的每一个项目都严格把关，追求质量，精选出最优质的项目进行发布，做一个对投资人有良心，有公信力的服务平台</p>
+                    <p>经营理念：让每个拥有创业梦想的人得到一个圆梦平台</p>
+                </div>
+            </div>
+        </div>
+        <div id='team_management'>
+            <div class='container'>
+                <p class='title ta_c'><span class='guidance_item'><span class='icon icon_user'></span>管理团队</span></p>
+                <ul class='clearfix team_management_list'>
+                    <li>
+                        <div class='img_container'><img src="/assets/images/liutingwei.png" /></div>
+                        <div class='content_container'>
+                            <div class='item_title'>刘庭玮（总经理）</div>
+                            <div class='item_content'>
+                                <p>美国波士顿大学金融专业，研究生学历。</p>
+                                <p>曾任美国马萨诸塞州大学助理研究员、美国Stallion全球咨询集团国际市场营销经理助理。上海迎睿股权投资基金管理有限公司投资经理，上海申满资产管理有限公司副总经理。擅长企业包装上市，行业分析研究和市场开拓。</p>
+                                <p>成功推荐上海伍德保网络科技股份有限公司、上海顶信医疗设备股份有限公司、上海肯耐珂萨人才服务股份有限公司、江苏宾肯科技股份有限公司、新世界信息产业股份有限公司、上海厚谊俊捷国际物流发展股份有限公司、上海贝爱教育投资管理股份有限公司等企业E板挂牌上海股权托管交易中心 。</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class='img_container'><img src="/assets/images/wengaijie.png" /></div>
+                        <div class='content_container'>
+                            <div class='item_title'>翁艾洁（总经理助理）</div>
+                            <div class='item_content'>
+                                <p> 毕业于华东政法大学，法律本科及人力资源培训背景，擅长项目统筹运营、客户关系。</p>
+                                <p>曾任Info Salons高级项目经理/客户经理，丰富的项目管理经验及500强企业客户服务经验。曾任皓锐文化传播有限公司客户部经理，构建公司客户管理数据库及项目管理系统。精于应变排除突发状况，规范提高团队执行力，把控进程，落成目标。善发掘客户潜在价值，建立互依互长，信赖坚实的合作关系。</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class='img_container'><img src="/assets/images/hujiong.png" /></div>
+                        <div class='content_container'>
+                            <div class='item_title'>姜峰（财务总监）</div>
+                            <div class='item_content'>
+                                <p> 中央广播电视大学会计专业，上海金融高等专科学校金融专业，本科学历，会计师。长期从事金融行业及财务管理工作，具有二十多年财务管理、税收规划、金融投资、企业管理、法务咨询等多方面实际工作经验，擅长企业整体服务包装上市，尤其擅长各类企业的账务梳理、税收规划、财务数据分析、企业战略策划、金融市场及其衍生业务的开展。</p>
+                                <p> 曾任永乐（中国）家用电器有限公司融资经理、上海优乐网络科技股份有限公司财务总监、上海至多实业有限公司财务总监、上海伍德保网络科技股份有限公司财务总监。</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class='img_container'><img src="/assets/images/wangyuhan.png" /></div>
+                        <div class='content_container'>
+                            <div class='item_title'>王玉函（投资部经理）</div>
+                            <div class='item_content'>
+                                <p>   同济大学金融学硕士，证券从业资格认证。擅长企业财务分析、投前估值分析把控以及投后管理。</p>
+                                <p>服务于国泰君安，在运营部协助经理对日常业务进行经营管理；在客户服务部协助客户经理与客户进行沟通、建立良好的客户关系。曾参与上海国际集团的关于城市商业银行全面风险管理改革的金融项目，其中主要负责研究和撰写城市商业银行全面风险管理体系的特点与难点以及城市商业银行全面风险管理的路径两章内容。</p>
+                                <p>成功参与推荐上海斯歌特体育股份有限公司、上海伍德保网络科技股份有限公司、上海顶信医疗设备股份有限公司、上海肯耐珂萨人才服务股份有限公司等企业E板挂牌上海股权托管交易中心。</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class='img_container'><img src="/assets/images/xuzhiyong.png" /></div>
+                        <div class='content_container'>
+                            <div class='item_title'>徐之湧（客户部经理）</div>
+                            <div class='item_content'>
+                                <p>美国萨福克大学（波士顿市）主修经济学，文学学士学位。</p>
+                                <p>曾服务于TD银行，主要职责为银行信用分析。负责银行信用卡新客户的开发工作；担任项目组小组长，制定本小组的业务销售计划，并和小组成员保质保量的完成任务；负责处理小组成员在工作中遇到的各种问题，协助部门经理进行日常的管理工作；善于收集小组成员在日常工作的相关疑问和问题，与部门经理一起组织定期培训。专业经融背景，国际性视角。擅长发掘客户价值，服务配对，目标捕捉追踪。</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id='about_us'>
+            <div class='container'>
+                <p class='title ta_c'><span class='guidance_item'><span class='icon icon_cup'></span>联系我们</span></p>
+                <div class='contact'>
+                    <div class="contact_left">
+                        <p class="bold">上海睿就投互联网金融信息服务有限公司</p>
+                        @{<p><span class="email"></span>邮箱：acc_m@rui9tou.com</p>}
+                        <p><span class="phone"></span>电话：021-20226053</p>
+                        <p><span class="address"></span>公司地址：中国（上海）自由贸易试验区世纪大道210号1004室</p>
+                        <div style="width:460px;height:210px;border:#ccc solid 1px;" id="dituContent"></div>
+                    </div>
+                    <div class="contact_right">
+                        <div class='step_row form-group'>
+                            <div class='row'>
+                                <div class='col-xs-12'>留言：</div>
+                            </div>
+                            <div class='row whole_width'>
+                                <div class='col-xs-12'>
+                                    <div class="input_field center_block">
+                                        <textarea class="form-control ib" rows='4' id="msg"></textarea>
+                                    </div>
+                                    <p class="error_msg" id="msgError"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class='step_row form-group'>
+                            <div class='row'>
+                                <div class='col-xs-12'>您的姓名：</div>
+                                <div class='col-xs-12'>
+                                    <p class="input_field">
+                                        <input class="form-control" id="name"/>
+                                    </p>
+                                    <p class="error_msg" id="nameError"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class='step_row form-group'>
+                            <div class='row'>
+                                <div class='col-xs-12'>您的邮箱：</div>
+                                <div class='col-xs-12'>
+                                    <p class="input_field">
+                                        <input class="form-control" id="email"/>
+                                    </p>
+                                    <p class="error_msg" id="emailError"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class='step_row form-group'>
+                            <div class='row'>
+                                <div class='col-xs-12'>电话：</div>
+                                <div class='col-xs-12'>
+                                    <p class="input_field">
+                                        <input class="form-control" id="telphone"/>
+                                    </p>
+                                    <p class="error_msg" id="telPhoneError"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class='step_row form-group'>
+                            <div class='row'>
+                                <div class='col-xs-12'>
+                                    <a class='btn btn-block btn-orange' id="sub">确定</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 弹出层 -->
+    <div class='layer' style="display:none" id="tips">
+        <div class='layer_cover'></div>
+        <div class='layer_center'>
+            <div class='layer_main'>
+                <div class="close_btn"><img src="/assets/images/icon/close_btn.png"/></div>
+                <div class='layer_title ta_c'>
+                    <p id="msgTitle">留言已经发送,感谢您的建议!</p>
+                </div>
+                <p class='ta_c'><button class='btn btn-orange layer_submit' id="sure" style="width:100%;">确定</button></p>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,23 @@
+@()(implicit data: core.mvc.ViewData[_])
+@data.style("stylesheets/css/project.css")(0)
+@data.style("stylesheets/css/activity.css")(0)
+@data.style("stylesheets/css/page980.css")(0)
+@data.style("stylesheets/css/common.css")(0)
+@data.script("javascripts/js/activity/activity.js")(2)
+@data.script("javascripts/js/tipBox.js")(2)
+@data.script("javascripts/js/zclip/jquery.zclip.js")(3)
+<script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"
+        xmlns="http://www.w3.org/1999/html"></script>
+@main{
+<div class="container">
+    <div class="navbar-header">
+        <button data-target=".navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle collapsed">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand"></a>
+    </div>
+</div>
+}

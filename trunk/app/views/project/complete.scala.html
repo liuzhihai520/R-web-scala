@@ -1,0 +1,17 @@
+@()(implicit data: core.mvc.ViewData[_])
+@data.style("stylesheets/css/startProject.css")(0)
+@main{
+  <div class='content'>
+    <div class='container'>
+      <div class='step_nav'>
+        <div class='nav_item'>项目信息</div>
+        <div class='nav_item'>公司信息</div>
+        <div class='nav_item checked'>完成</div>
+      </div>
+      <div class='step_main step_3'>
+        <img src="/assets/images/startComplete.png"/><br />
+        您的项目资料已提交成功，我们将尽快审核！
+      </div>
+    </div>
+  </div>
+}

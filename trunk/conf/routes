@@ -1,0 +1,60 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET         /                                controllers.IndexController.index
+GET         /regLogin                        controllers.AuthController.regLogin
+GET         /getCaptcha                      controllers.CaptchaController.getCaptcha
+GET         /isReg                           controllers.AuthController.isReg(tel:String)
+GET         /isAccount                       controllers.AuthController.isAccount(account:String)
+POST        /reg                             controllers.AuthController.reg
+POST        /login                           controllers.AuthController.login
+GET         /logout                          controllers.AuthController.logout
+POST        /forget                          controllers.AuthController.forget
+GET         /center                          controllers.CenterController.center
+GET         /publish                         controllers.ProjectController.publish
+GET         /userView                        controllers.CenterController.userView
+GET         /editorView                      controllers.CenterController.editorView
+POST        /saveMemberView                  controllers.CenterController.saveMemberView
+GET         /authView                        controllers.CenterController.authView
+GET         /authFailView                    controllers.CenterController.authFailView
+POST        /userAuth                        controllers.CenterController.userAuth
+GET         /password                        controllers.CenterController.password
+POST        /updatePassword                  controllers.CenterController.updatePassword
+POST        /submitPublish                   controllers.ProjectController.submitPublish
+GET         /projectInfo/:id                 controllers.ProjectController.projectInfo(id:Long)
+POST        /updateProject                   controllers.ProjectController.updateProject
+GET         /companyViews/:id                controllers.ProjectController.companyViews(id:Long)
+POST        /saveCompany                     controllers.ProjectController.saveCompany
+GET         /completePublish                 controllers.ProjectController.completePublish
+GET         /itemList                        controllers.ProjectController.itemList
+GET         /itemListV/:pageNumber           controllers.ProjectController.itemListV(pageNumber:Int)
+GET         /activityInfo/:activityid        controllers.ActivityController.activityinfo(activityid:Long)
+GET         /newsInfo/:newsid                controllers.NewsController.newsInfo(newsid:Long)
+GET         /item/:id                        controllers.ProjectController.item(id:Long)
+GET         /isMainInfo/:id                  controllers.ProjectController.isMainInfo(id:Long)
+POST        /ajaxLogin                       controllers.AuthController.ajaxLogin
+POST        /ajaxReg                         controllers.AuthController.ajaxReg
+POST        /invest                          controllers.InvestController.invest
+POST        /investMain1                     controllers.InvestController.investMain1
+POST        /cancelSignUp                    controllers.InvestController.cancelSignUp
+POST        /regActivity                     controllers.ActivityController.registration
+POST        /regOutActivity                  controllers.ActivityController.registrationOut
+POST        /sendSms                         controllers.IndexController.sendSms
+GET         /FAQ                             controllers.HtmlController.FAQ(id:Int = 1,trun:Int = 0)
+GET         /FAQ/:id/:trun                   controllers.HtmlController.FAQ(id:Int,trun:Int)
+GET         /aboutUs                         controllers.HtmlController.aboutUs(trun:Int = 0)
+GET         /aboutUs/:trun                   controllers.HtmlController.aboutUs(trun:Int)
+POST        /isRealAuth                      controllers.CenterController.isRealAuth
+POST        /countBanner                     controllers.IndexController.countBanner
+GET         /bannerinfo/:bannerId            controllers.BannerController.BannerInfo(bannerId:Long)
+GET         /APP                             controllers.HtmlController.APP
+POST        /upload                          controllers.ImageController.editorUpload
+GET         /activityList/:pageNumber        controllers.ActivityController.activityList(pageNumber:Int)
+GET         /newsList/:pageNumber            controllers.NewsController.newsList(pageNumber:Int)
+GET         /demo/:itemId                    controllers.ActivityController.roadShow(itemId:Long)
+POST        /isRegUsername                   controllers.CenterController.isRegUsername
+POST        /msg                             controllers.HtmlController.msg
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file                    controllers.Assets.versioned(path="/public", file: Asset)

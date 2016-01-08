@@ -1,0 +1,223 @@
+@(typeList: List[model.TypeClass], companyForm: Form[form.CompanyForm], id: Long)(implicit data: core.mvc.ViewData[_])
+@data.style("stylesheets/css/startProject.css")(0)
+@data.script("javascripts/js/city.js")(0)
+@data.script("javascripts/My97DatePicker/WdatePicker.js")(1)
+@data.script("javascripts/js/project/company.js")(2)
+@main {
+    <div class='content'>
+        <div class='container'>
+            <div class='step_nav'>
+                <div class='nav_item'>项目信息</div>
+                <div class='nav_item checked'>公司信息</div>
+                <div class='nav_item'>完成</div>
+            </div>
+            <form action="/saveCompany" id="form" name="form" method="post">
+                <div class='step_main step_2'>
+                    <p class='step_title'>公司信息</p>
+                    <div class='position_prefix'>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>公司名称：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <input type="hidden" id="id" name="id" value="@id"/>
+                                        <input class="form-control" id="pcname" name="pcname" value="@companyForm("pcname").value" maxlength="30"/>
+                                    </p>
+                                    <p class="error_msg" id="pcnameError"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>公司网站：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <input class="form-control" id="web" name="web" value="@companyForm("web").value.getOrElse("")" maxlength="20"/>
+                                    </p>
+                                    <p class="error_msg"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>所在城市：</div>
+                                <div class='col-xs-4 select_left form-inline'>
+                                    <p class="input_field">
+                                        <select class="form-control" id="ddlProvince" name="province">
+                                            <option>--请选择--</option>
+                                        </select>
+                                        <span class='ex'>省（直辖市）</span>
+                                    </p>
+                                    <p class="error_msg" id="provinceError"></p>
+                                </div>
+                                <div class='col-xs-4 select_right form-inline'>
+                                    <p class="input_field">
+                                        <input type="hidden" id="citys" value="@companyForm("location").value"/>
+                                        <select class="form-control" id="ddlCity" name="city">
+                                            <option>--请选择--</option>
+                                        </select>
+                                        <span class='ex'>市</span>
+                                    </p>
+                                    <p class="error_msg" id="cityError"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>工商执照注册号：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <input class="form-control" id="licensenum" name="licensenum" value="@companyForm("licensenum").value" maxlength="30"/>
+                                    </p>
+                                    <p class="error_msg" id="licensenumError"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>OTC或新三板挂牌：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <span class="radio-inline">
+                                            <label>
+                                                <input type="hidden" id="islisting" name="islisting" value="@companyForm("islisting").value.getOrElse("0")"/>
+                                                @if(companyForm("islisting").value == "1") {
+                                                    <input type="radio" id="otc" name="listing" value="1" checked="checked"/>
+                                                    OTC
+                                                } else {
+                                                    <input type="radio" id="otc" name="listing" value="2"/> OTC
+                                                }
+                                            </label>
+                                        </span>
+                                        <span class="radio-inline">
+                                            <label>
+                                            @if(companyForm("islisting").value == "2") {
+                                                <input type="radio" id="three" name="listing" value="2" checked="checked"/>
+                                                新三板
+                                            } else {
+                                                <input type="radio" id="three" name="listing" value="2"/> 新三板
+                                            }
+                                            </label>
+                                        </span>
+                                    </p>
+                                    <p class="error_msg"></p>
+                                </div>
+                                <div class='col-xs-8 col-xs-offset-4'>
+                                    <p class="input_field">
+                                        <input class="form-control" placeholder='请输入对应代码' id="listingcode" name="listingcode" value="@companyForm("listingcode").value.getOrElse("")" maxlength="20"/>
+                                    </p>
+                                    <p class="error_msg" id="listingcodeError"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>公司成立时间：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <input type="text" id="foundtime" name="foundtime" class="form-control" readonly
+                                        onfocus="WdatePicker({dateFmt:'yyyy-MM',maxDate:'%y-%M'})"
+                                        />
+                                    </p>
+                                    <p class="error_msg"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>公司员工人数：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <input class="form-control" id="agencynum" name="agencynum" value="@companyForm("agencynum").value.getOrElse("0")" maxlength="5"/>
+                                    </p>
+                                    @if(companyForm("agencynum").hasErrors){
+                                        <p class="error_msg">员工数应为正整数</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>公司估值（万元）：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <input class="form-control" id="valueation" name="valueation" value="@companyForm("valueation").value.getOrElse("0")" maxlength="6"/>
+                                    </p>
+                                    @if(companyForm("valueation").hasErrors){
+                                        <p class="error_msg" id="valueationError">请输入正确的估值金额</p>
+                                    }else{
+                                        <p class="error_msg" id="valueationError"></p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>推荐人姓名：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <input class="form-control" id="referee" name="referee" value="@companyForm("referee").value.getOrElse("")" maxlength="20"/>
+                                    </p>
+                                    <p class="error_msg"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>推荐人联系方式：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <input class="form-control" placeholder="请填写手机号码或邮箱" id="refereetel" name="refereetel" value="@companyForm("refereetel").value.getOrElse("")" maxlength="30"/>
+                                    </p>
+                                    <p class="error_msg"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>联系人姓名：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <input class="form-control" id="linkman" name="linkman" value="@companyForm("linkman").value" maxlength="20"/>
+                                    </p>
+                                    <p class="error_msg" id="linkmanError"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>联系人联系方式：</div>
+                                <div class='col-xs-8'>
+                                    <p class="input_field">
+                                        <input class="form-control" placeholder="请填写手机号码或邮箱" id="linkmantel" name="linkmantel" value="@companyForm("linkmantel").value" maxlength="20"/>
+                                    </p>
+                                    <p class="error_msg" id="linkmantelError"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='step_row form-group necessary'>
+                            <div class='row'>
+                                <div class='col-xs-4 ta_r'>项目职位</div>
+                                <div class='col-xs-8'>
+                                    <select class="form-control" id="linkmanjob" name="linkmanjob">
+                                    @for( i <- typeList) {
+                                        @if(i.id == companyForm("linkmanjob").value.getOrElse(0L).toString.toLong) {
+                                            <option value="@i.id" selected="selected">--@i.name--</option>
+                                        } else {
+                                            <option value="@i.id">--@i.name--</option>
+                                        }
+                                    }
+                                    </select>
+                                    <p class="error_msg"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class='ta_c'>
+                        <button class='btn submit_btn' type="button" id="sub">提交</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+}

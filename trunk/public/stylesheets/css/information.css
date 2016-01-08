@@ -1,0 +1,149 @@
+.information_pannel .main .pannel_title{
+	height:auto;
+	padding:0  20px;
+}
+.information_pannel .main .pannel_title h1{
+	font-size:24px;
+}
+.sub_info{
+	margin:0;
+	border-bottom:1px solid #d0d0d0;
+}
+.sub_info_left{
+	font-size:12px;
+	color:#888;
+	margin-top:15px;
+	height:25px;
+	line-height:25px;
+}
+.sub_info_right p{
+	margin-left:20px;
+}
+.pannel_tag{
+	padding:0;
+}
+.reading_guidance{
+	min-height:100px;
+	border:1px dashed #d0d0d0;
+	position:relative;
+	margin-top:50px;
+	padding:30px 20px;
+}
+.reading_guidance:after{
+	content:'导读';
+	position:absolute;
+	width:84px;
+	height:30px;
+	background:#f8a82b;
+	color:#fff;
+	text-align:center;
+	line-height:30px;
+	top:-15px;
+	left:15px;
+
+}
+
+/* 列表页 */
+.information_list_main {
+    font-size:16px;
+    color:#545454;
+    margin:0 0 20px 16px;
+    background:#fdfdfd;
+}
+.information_list_main .pos {
+    width:100%;
+    height:96px;
+    line-height:96px;
+}
+.information_list_main .pos a {
+    font-size:16px;
+    color:#545454;
+}
+
+.info_list {
+    font-size:16px;
+    margin-bottom:150px;
+}
+.info_item_tit {
+    width:100%;
+    height:44px;
+    line-height:44px;
+    border-bottom:1px solid #f7f7f7;
+    color:#828282;
+    padding-left:10px;
+}
+.info_item_des {
+    overflow:hidden;
+    background:#fff;
+    border-bottom:1px solid #f7f7f7;
+    padding:10px 0;
+    padding-left:10px;
+    color:#545454;
+    font-size:18px;
+    height:100px;
+}
+.info_item_des a{
+    color:#545454;
+}
+.info_item_des span {
+    color:#a0a0a0;
+    font-size:12px;
+}
+.info_item_des div {
+    float:left;
+}
+.info_item_des .info_img {
+    margin-right:20px;
+}
+.info_item_des .info_img img {
+    width:150px;
+    height:80px;
+}
+.info_title {
+    padding-top:15px;
+}
+
+
+.page {
+    width:230px;
+    height:30px;
+    margin:0 auto;
+    font-size:12px;
+}
+.page li{
+    float:left;
+    margin-right:10px;
+    width:20px;
+    height:20px;
+    text-align:center;
+    line-height:20px;
+}
+.page li.prev, .page li.next{
+    width:auto;
+    height:auto;
+}
+.page li.prev{
+    margin-right:30px
+}
+.page li.next{
+    margin-left:20px
+}
+.page li.active{
+    background:#ffb321;
+    border-radius:50%;
+}
+.page li.active a{
+    color:#fff;
+}
+.page li a{
+    color:#828282;
+}
+.page li.last{
+    margin-right:0px;
+}
+.page li.prev, .page li.next{
+    float:left;
+}
+.page980_pannel .pannel_content p img {
+    max-width:100%;
+}

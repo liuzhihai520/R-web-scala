@@ -1,0 +1,153 @@
+.content{
+	background:#ececec;
+	padding-top:76px;
+}
+.step_nav{
+	height:58px;
+	background:#fff;
+	border:1px solid #e0e0e0;
+	margin-bottom:66px;
+}
+.nav_item{
+	background:transparent;
+	width:33%;
+	height:100%;
+	float:left;
+	position:relative;
+	text-align:center;
+	line-height:56px;
+	font-size:16px;
+}
+.nav_item:after{
+	content:'';
+	display:block;
+	position:absolute;
+	right:-18px;
+	top:0;
+	width:18px;
+	height:56px;
+	background:url(../../images/startProject_nav_after.png);
+}
+.nav_item:nth-child(3){
+	width:34%;
+}
+.nav_item:nth-child(3):after{
+	display:none;
+}
+.nav_item.checked{
+	background:#ffb82f;
+	color:#fff;
+}
+.nav_item.checked:after{
+	width: 0;
+    height: 0;
+	background:none;
+    border-top: 28px solid transparent;
+    border-left: 18px solid #ffb82f;
+    border-bottom: 28px solid transparent;
+}
+.step_main{
+	border:1px solid #d0d0d0;
+	border-bottom:0;
+	background:#fff;
+	min-height:520px;
+	padding:50px 40px 60px;
+}
+.step_title{
+	font-size:16px;
+}
+.position_prefix{
+	padding-left:40px;
+	padding-right:220px;
+}
+.position_prefix .whole_width{
+	margin-left:-40px;
+	margin-right:-220px;
+}
+.step_row{
+	line-height:40px;
+}
+.input_field{
+	margin:0;
+}
+.necessary {
+    min-height: 40px;
+    line-height: 40px;
+    position: relative;
+    vertical-align: middle;
+}
+.necessary:after{
+	content:'*';
+	display:block;
+	color:red;
+	position:absolute;
+	right:-30px;
+	top:0;
+	width:20px;
+}
+.error_msg {
+    height: 20px;
+    line-height: 20px;
+    margin-bottom: 0;
+    color: red;
+}
+.step_row .form-inline .form-control{
+	width:158px;
+}
+.select_left{
+	padding-right:0;
+	white-space:nowrap;
+}
+.select_right{
+	padding-left:0;
+	text-align:right;
+	white-space:nowrap;
+}
+.ex{
+	margin-left:5px;
+}
+.input_field{
+	line-height:1.42857;
+}
+.input_field .radio-inline{
+	margin-top:10px;
+}
+.submit_btn{
+	color:#fff;
+	width:182px;
+	padding:13px 0;
+	background:#ff9a23;
+	font-size:16px;
+}
+
+.center_block{
+	width:618px;
+	margin:0 auto;
+}
+.upload_btn{
+	color:#fff;
+	background:#ff9a23;
+	padding:4px 0;
+}
+.upload_ex{
+	font-size:12px;
+	color:#828282;
+	line-height:40px;
+	height:40px;
+	margin-bottom:0;
+}
+.preview_container{
+	margin-top:5px;
+	width:200px;
+	height:200px;
+	/*border:1px solid #ccc;*/
+}
+.upload_field{
+	display:inline-block;
+	vertical-align:middle;
+}
+.step_3{
+    padding-top: 150px;
+    line-height:70px;
+    text-align: center;
+}

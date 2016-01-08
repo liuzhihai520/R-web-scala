@@ -1,0 +1,141 @@
+@(member:Option[model.Member],authForm:Form[form.UserAuthForm])(implicit data: core.mvc.ViewData[_])
+@data.style("stylesheets/css/userCenter.css")(0)
+@data.script("javascripts/webuploader/webuploader.flashonly.js")(0)
+@data.script("javascripts/js/center/user/authImage1.js")(1)
+@data.script("javascripts/js/center/user/authImage2.js")(2)
+@data.script("javascripts/js/center/user/authImage3.js")(3)
+@data.script("javascripts/js/center/user/authImage4.js")(4)
+@data.script("javascripts/js/center/user/userAuth.js")(5)
+@main {
+    <div class='content'>
+        @views.html.common.usertop(member,1)
+        <div class='container'>
+            <div class='row user_center_nav'>
+                <a href="/userView" style="cursor: pointer"><div class='col-xs-2 nav_item'>个人信息</div></a>
+                <a href="/password" style="cursor: pointer"><div class='col-xs-2 nav_item'>密码设置</div></a>
+                <a href="/authView" style="cursor: pointer"><div class='col-xs-2 nav_item active'>实名认证</div></a>
+            </div>
+            <form action="/userAuth" id="form" name="form" method="post">
+                <div class='realname_certification'>
+                    <div class='status_edit'>
+                        <div class='row ta_c tips'>
+                            提示：实名认证有助于提高您的信用，请仔细填写资料
+                        </div>
+                        <div class='row info_row'>
+                            <div class='col-xs-4 ta_r'>真实姓名：</div>
+                            <div class='col-xs-8'>
+                                <p class="input_field">
+                                    <input class="form-control" id="name" name="name"/>
+                                </p>
+                                @{
+                                    if(authForm("name").hasErrors){
+                                        <p class="error_msg" id="nameError">真实姓名为2-6个字符</p>
+                                    }else{
+                                        <p class="error_msg" id="nameError"></p>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class='row info_row'>
+                            <div class='col-xs-4 ta_r'>证件号：</div>
+                            <div class='col-xs-8'>
+                                <p class="input_field">
+                                    <input class="form-control" id="card" name="card"/>
+                                </p>
+                                @{
+                                    if(authForm("card").hasErrors){
+                                        <p class="error_msg" id="cardError">身份证格式错误</p>
+                                    }else{
+                                        <p class="error_msg" id="cardError"></p>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class='row info_row'>
+                            <div class='col-xs-4 ta_r'>身份证正面：</div>
+                            <div class="col-xs-1">
+                                <div>
+                                    <div class="btn upload_btn">
+                                        <div id="picker1">选择文件</div>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="front" name="front"/>
+                                <div class='preview_container img_center_middle'><img id="frontImg"/></div>
+                                @{
+                                    if(authForm("front").hasErrors){
+                                        <p class="error_msg" id="img1Error">请上传身份证正面</p>
+                                    }else{
+                                        <p class="error_msg" id="img1Error"></p>
+                                    }
+                                }
+                            </div>
+                            <span class="upload_ex">身份证信息清晰可见</span>
+                        </div>
+                        <div class='row info_row'>
+                            <div class='col-xs-4 ta_r'>身份证反面：</div>
+                            <div class="col-xs-1">
+                                <div>
+                                    <div class="btn upload_btn">
+                                        <div id="picker2">选择文件</div>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="back" name="back"/>
+                                <div class='preview_container img_center_middle'><img id="backImg"/></div>
+                                @{
+                                    if(authForm("back").hasErrors){
+                                        <p class="error_msg" id="img2Error">请上传身份证正面</p>
+                                    }else{
+                                        <p class="error_msg" id="img2Error"></p>
+                                    }
+                                }
+                            </div>
+                            <span class="upload_ex">身份证信息清晰可见</span>
+                        </div>
+                        <div class='row info_row'>
+                            <div class='col-xs-4 ta_r'>手持身份证：</div>
+                            <div class="col-xs-8">
+                                <div style="width: 10%">
+                                    <div class="btn upload_btn">
+                                        <div id="picker3">选择文件</div>
+                                    </div>
+                                </div>
+                                <div class='preview_container img_center_middle'><img id="handImg"/></div>
+                                <input type="hidden" id="hand" name="hand"/>
+                                @{
+                                    if(authForm("hand").hasErrors){
+                                        <p class="error_msg" id="img3Error">请上传手持身份证相片</p>
+                                    }else{
+                                        <p class="error_msg" id="img3Error"></p>
+                                    }
+                                }
+                                <div class='upload_example_img' style="margin-top: -30px;">
+                                    <img src="/assets/images/upload_example_img.jpg?v=333333" style="width: 280px;">
+                                </div>
+                                <span class="upload_ex">上传相片请保持身份证头像 ，身份信息清晰可见</span>
+                            </div>
+                        </div>
+                        <div class='row info_row'>
+                            <div class='col-xs-4 ta_r'>资产证明：</div>
+                            <div class="col-xs-1">
+                                <div>
+                                    <div class="btn upload_btn">
+                                        <div id="picker4">选择文件</div>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="credit" name="credit"/>
+                                <p><span class="upload_ex" id="creditMsg"></span></p>
+                            </div>
+                            <span class="upload_ex">支持格式：JPG、PNG、PDF、Excel、Word、PPT</span>
+                        </div>
+                        <div class='row info_row'>
+                            <div class='col-xs-12 ta_c'><button class='btn btn-orange edit_btn' type="button" id="sub">提交资料</button></div>
+                        </div>
+                    </div>
+                    <div class='status_waiting' style='display:none'>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+}

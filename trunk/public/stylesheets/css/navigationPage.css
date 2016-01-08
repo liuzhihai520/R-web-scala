@@ -1,0 +1,105 @@
+#page_whole body{
+	background:url(../images/navigationPage_bg.jpg);
+	background-size:cover;
+}
+.navigationPage_nav{
+	background:#060606;
+	height:70px;
+	line-height:70px;
+	color:#fff;
+}
+.navigationPage_nav .orange{
+	margin-right:10px;
+}
+.navigationPage_nav .orange:hover{
+}
+.navigationPage_nav_left{
+	float:left;
+}
+.navigationPage_nav_right{
+	float:right;
+}
+.navigationPage_nav_right a{
+	margin-right:20px;
+	color:#fff;
+}
+.navigationPage_logo{
+	position:absolute;
+	width:416px;
+	height:294px;
+	background:url(../images/navigationPage_logo.png);
+	background-size:cover;
+	top:50%;
+	left:50%;
+	margin-top:-147px;
+	margin-left:-208px;
+}
+.navigationPage_linkgroup{
+	position:absolute;
+	bottom:80px;
+	left:0;
+	width:100%;
+	text-align:center;
+}
+.navigationPage_linkgroup a{
+	display:inline-block;
+	width:160px;
+	height:130px;
+}
+.navigationPage_icon{
+	display:inline-block;
+	width:100px;
+	height:100px;
+	border:1px solid #000;
+	border-radius:100%;
+	margin-bottom:10px;
+	margin:0 30px 10px;
+}
+.link_home .navigationPage_icon{
+	background:url(../images/navigationPage_icon/icon1.png) center center no-repeat;
+}
+.link_project_quality .navigationPage_icon{
+	background:url(../images/navigationPage_icon/icon2.png) center center no-repeat;
+}
+.link_project_start .navigationPage_icon{
+	background:url(../images/navigationPage_icon/icon3.png) center center no-repeat;
+}
+.link_app .navigationPage_icon{
+	background:url(../images/navigationPage_icon/icon4.png) center center no-repeat;
+}
+.navigationPage_icon_des{
+	color:#fff;
+	white-space:nowrap;
+}
+@media (max-width:1367px){
+	.navigationPage_linkgroup{
+		bottom:10px;
+	}
+}
+/*
+@media (max-width:767px){
+	.navigationPage_logo{
+		width:190px;
+		height:130px;
+		margin-top:-65px;
+		margin-left:-95px
+	}
+	.navigationPage_linkgroup{
+		bottom:10px;
+	}
+	.navigationPage_linkgroup a{
+		width:70px;
+		height:60px;
+	}
+	.navigationPage_icon{
+		width:40px;
+		height:40px;
+		margin:0 15px 10px;
+		background-size:70% !important;
+	}
+	.navigationPage_icon_des{
+		font-size:10px;
+	}
+}
+*/
+

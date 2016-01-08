@@ -1,0 +1,113 @@
+@(member:Option[model.Member],jobList:List[model.TypeClass])(implicit data: core.mvc.ViewData[_])
+@data.style("stylesheets/css/userCenter.css")(0)
+@main {
+    <div class='content'>
+        @views.html.common.usertop(member,1)
+        <div class='container'>
+            <div class='row user_center_nav'>
+                <a href="/userView" style="cursor: pointer"><div class='col-xs-2 nav_item active'>个人信息</div></a>
+                <a href="/password" style="cursor: pointer"><div class='col-xs-2 nav_item'>密码设置</div></a>
+                <a href="/authView" style="cursor: pointer"><div class='col-xs-2 nav_item'>实名认证</div></a>
+            </div>
+            <div class='result' style="display: block;">
+                <div class='row info_row left120'>
+                    <div class='col-xs-4 ta_r'>头像：</div>
+                    <div class='col-xs-8'>
+                        <img src="@data.static/avatar/640/640/@{data.identity.id}@Html(".png")" width='150' height='150' />
+                    </div>
+                </div>
+                <div class='row info_row left120'>
+                    <div class='col-xs-4 ta_r'>姓名：</div>
+                    <div class='col-xs-8'>
+                        @member.get.name.getOrElse("未填写")
+                    </div>
+                </div>
+                <div class='row info_row left120'>
+                    <div class='col-xs-4 ta_r'>性别：</div>
+                    <div class='col-xs-8'>
+                        @member.get.sex.getOrElse("未填写")
+                    </div>
+                </div>
+                <div class='row info_row left120'>
+                    <div class='col-xs-4 ta_r'>出生日期：</div>
+                    <div class='col-xs-8'>
+                        @if(member.get.birthday != None){
+                            @member.get.birthday.get.toString("yyyy-MM-dd")
+                        }else{
+                            未填写
+                        }
+                    </div>
+                </div>
+
+                <div class='row info_row left120'>
+                    <div class='col-xs-4 ta_r'>用户名：</div>
+                    <div class='col-xs-8'>
+                        @member.get.accountname
+                    </div>
+                </div>
+
+                <div class='row info_row left120'>
+                    <div class='col-xs-4 ta_r'>手机号：</div>
+                    <div class='col-xs-8'>
+                        @data.identity.tel.substring(0,3)***@data.identity.tel.substring(7,11)
+                    </div>
+                </div>
+
+                <div class='row info_row'>
+                    <div class='col-xs-4 ta_r'>邮箱：</div>
+                    <div class='col-xs-8'>
+                        @member.get.email.getOrElse("未填写")
+                    </div>
+                </div>
+
+                <div class='row info_row'>
+                    <div class='col-xs-4 ta_r'>城市：</div>
+                    <div class='col-xs-8'>
+                        @member.get.city.getOrElse("")
+                    </div>
+                </div>
+
+                <div class='row info_row left120'>
+                    <div class='col-xs-4 ta_r'>公司名称：</div>
+                    <div class='col-xs-8'>
+                        @member.get.pcname.getOrElse("未填写")
+                    </div>
+                </div>
+
+                <div class='row info_row left120'>
+                    <div class='col-xs-4 ta_r'>职位：</div>
+                    <div class='col-xs-8'>
+                        @if(member.get.job.getOrElse(0) != 0){
+                            @for(i <- jobList){
+                                @if(i.id == member.get.job.getOrElse(0)){
+                                    @i.name
+                                }
+                            }
+                        }else{
+                            未填写
+                        }
+                    </div>
+                </div>
+
+                <div class='row info_row left120'>
+                    <div class='col-xs-4 ta_r'>投资理念：</div>
+                    <div class='col-xs-8'>
+                        @member.get.investmentideas.getOrElse("未填写")
+                    </div>
+                </div>
+
+                <div class='row info_row left120'>
+                    <div class='col-xs-4 ta_r'>个人简介：</div>
+                    <div class='col-xs-8'>
+                        @member.get.description.getOrElse("未填写")
+                    </div>
+                </div>
+
+                <div class='row info_row'>
+                    <div class='col-xs-12 ta_c'><a href="/editorView"><button class='btn btn-orange edit_btn'>修改</button></a></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}

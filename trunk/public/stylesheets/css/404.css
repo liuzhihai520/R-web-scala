@@ -1,0 +1,68 @@
+.bg{
+	height:100%;
+	width:100%;
+	background:url(../../images/404.jpg) center center no-repeat rgb(237,237,237);
+}
+.navigationPage_linkgroup{
+	position:absolute;
+	bottom:80px;
+	left:0;
+	width:100%;
+	text-align:center;
+}
+.navigationPage_linkgroup a{
+	display:inline-block;
+	width:160px;
+	height:130px;
+}
+.navigationPage_icon{
+	display:inline-block;
+	width:100px;
+	height:100px;
+	border-radius:100%;
+	margin-bottom:10px;
+	margin:0 30px 10px;
+}
+.link_home .navigationPage_icon{
+	background:url(../images/navigationPage_icon/icon1.png) center center no-repeat;
+}
+.link_project_quality .navigationPage_icon{
+	background:url(../images/navigationPage_icon/icon2.png) center center no-repeat;
+}
+.link_project_start .navigationPage_icon{
+	background:url(../images/navigationPage_icon/icon3.png) center center no-repeat;
+}
+.link_app .navigationPage_icon{
+	background:url(../images/navigationPage_icon/icon4.png) center center no-repeat;
+}
+.navigationPage_icon_des{
+	color:#000;
+	white-space:nowrap;
+}
+/*
+@media (max-width:767px){
+	.navigationPage_logo{
+		width:190px;
+		height:130px;
+		margin-top:-65px;
+		margin-left:-95px
+	}
+	.navigationPage_linkgroup{
+		bottom:10px;
+	}
+	.navigationPage_linkgroup a{
+		width:70px;
+		height:60px;
+	}
+	.navigationPage_icon{
+		width:40px;
+		height:40px;
+		margin:0 15px 10px;
+		background-size:70% !important;
+	}
+	.navigationPage_icon_des{
+		font-size:10px;
+	}
+}
+*/
+

@@ -1,0 +1,162 @@
+@import org.joda.time.DateTime
+@(member: Option[model.Member], proList: List[model.MyProject], investList: List[model.MyInvest], activityList: List[model.Activity])(implicit data: core.mvc.ViewData[_])
+@data.style("stylesheets/css/userCenter.css")(0)
+@data.script("javascripts/js/center/center.js")(0)
+@main {
+    <div class='content'>
+        @views.html.common.usertop(member,0)
+        <div class='container'>
+            <div class='row user_center_nav' id="user_nav">
+                <div class='col-xs-2 nav_item active'><a href="javascript:;">我的投资</a></div>
+                <div class='col-xs-2 nav_item'><a href="javascript:;">我的融资</a></div>
+                <div class='col-xs-2 nav_item'><a href="javascript:;">我的活动</a></div>
+                <div class='col-xs-2'>
+                    <a href="javascript:;" class='btn btn-orange btn_start_project' id="isPublish"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;发起项目</a>
+                </div>
+            </div>
+            <div class='result' style="min-height: 420px;display: block; ">
+            @if(investList.size > 0){
+                @for( i <- investList) {
+                    <div class='row result_row'>
+                        <div class='col-xs-2 no-padding img_container'>
+                            <a href="/item/@i.projectid"><img src="@data.static/@i.imgurl.getOrElse("")" width="200" height="150"/></a>
+                        </div>
+                        <div class='col-xs-10 content_container'>
+                            <div class='row_title'>
+                                <a href="/item/@i.projectid">@i.name.getOrElse("")</a>
+                                @{
+                                    if(i.status.getOrElse("0") == "4" && (i.day > 0)){
+                                            <span class='btn btn-green'>融资中</span>
+                                    }else if(i.status.getOrElse("0") == "5" || (i.day <= 0)){
+                                            <span class='btn btn-grey'>已结束</span>
+                                    }
+                                }
+                            </div>
+                            <div class='row_des'>
+                            @Html(i.synopsis.getOrElse(""))
+                            </div>
+                            <div class='row_opts'>
+                                <span>已融资：<font><big>@i.financingamount</big>万元</font></span>
+                                <span>计划融资：<font class='orange'><big>@i.financingsum</big>万元</font></span>
+                                <span>报名者：<font><big>@i.sign</big>人</font></span>
+                            </div>
+                            <div class='row_info'>
+                                <span class="info_item location"><i class="icon icon_location"></i>@i.location.getOrElse("")</span><span class="info_item industry"><i class="icon icon_tag top-1"></i>@i.tag</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }else{
+                <span class="tipsSpan">暂无投资,<a href="/itemList"><font style="color: orange">去寻找好项目</font></a></span>
+            }
+            </div>
+            <div class='result' style="min-height: 420px;">
+                @if(proList.size > 0){
+                    @for( i <- proList) {
+                        <div class='row result_row'>
+                            <div class='col-xs-2 no-padding img_container'>
+                                @if(i.status.getOrElse("0") == "1"){
+                                    <img src="@data.static/@i.imgurl.getOrElse("")" width="200" height="150"/>
+                                }else{
+                                    <a href="/item/@i.id"><img src="@data.static/@i.imgurl.getOrElse("")" width="200" height="150"/></a>
+                                }
+                            </div>
+                            <div class='col-xs-10 content_container'>
+                                <div class='row_title'>
+                                    @if(i.status.getOrElse("0") == "1"){
+                                        @i.name
+                                    }else{
+                                        <a href="/item/@i.id">@i.name</a>
+                                    }
+                                    @if(i.status.getOrElse("0") == "1"){
+                                        <span class='btn btn-orange'>审核中</span>
+                                    }
+                                    @if(i.status.getOrElse("0") == "2"){
+                                        <span class='btn btn-green'>审核通过</span>
+                                    }
+                                    @if(i.status.getOrElse("0") == "3"){
+                                        <a href="javascript:;" data-toggle="tooltip" data-placement="bottom" title="@i.passdescription.getOrElse("")" class='btn btn-not-pass'>
+                                            <img src="/assets/images/icon/not_pass.png" />审核未通过
+                                        </a>
+                                    }
+                                    @if(i.status.getOrElse("0") == "4" && (i.endtime.getOrElse(new DateTime()).getMillis - System.currentTimeMillis()) > 0){
+                                        <span class='btn btn-green'>融资中</span>
+                                    }
+                                    @if(i.endtime.get.getMillis - System.currentTimeMillis() < 0){
+                                        <span class='btn btn-grey'>已结束</span>
+                                    }
+                                </div>
+                                <div class='row_des'>
+                                @Html(i.synopsis.getOrElse(""))
+                                </div>
+                                <div class='row_opts'>
+                                    <span>已融资：<font><big>@i.financingamount</big>万元</font></span>
+                                    <span>计划融资：<font class='orange'><big>@i.financingsum</big>万元</font></span>
+                                    <span>报名者：<font><big>@i.sign</big>人</font></span>
+                                </div>
+                                <div class='row_info'>
+                                    <span class="info_item location"><i class="icon icon_location"></i>@i.location</span><span class="info_item industry"><i class="icon icon_tag"></i>@i.tag</span>
+                                </div>
+                            </div>
+                            @if(i.status.getOrElse("0").toInt == 0 || i.status.getOrElse("0").toInt == 1 || i.status.getOrElse("0").toInt == 3){
+                                <div class='right_operation'><a href="/projectInfo/@i.id">修改</a></div>
+                            }
+                        </div>
+                    }
+                }else{
+                    <span class="tipsSpan">暂无项目</span>
+                }
+            </div>
+            <div class='result' style="min-height: 420px;">
+                @if(activityList.size > 0){
+                    @for( i <- activityList) {
+                        <div class='row result_row'>
+                            <div class='col-xs-2 no-padding img_container'>
+                                <a href="/activityInfo/@i.id"><img src="@data.static/@i.imgurl" width="200" height="200"></a>
+                            </div>
+                            <div class='col-xs-10 content_container'>
+                                <div class='row_title'>
+                                    <a href="/activityInfo/@i.id">@i.title</a>
+                                <span class='btn btn-green'>
+                                @{
+                                    i.types match {
+                                        case 1 => "进行中"
+                                        case 2 => "已经结"
+                                        case _ => "进行中"
+                                    }
+                                }
+                                </span>
+                                </div>
+                                <div class='row_des'>
+                            报名截止时间：@i.endtime.toString("yyyy-MM-dd HH:mm")
+                            </div>
+                                <div class='row_des'>
+                            活动：@i.activitytime.toString("yyyy-MM-dd HH:mm")
+                            </div>
+                                <div class='row_info'>
+                                    <span class="info_item location"><i class="icon icon_location"></i>@i.address</span><span class="info_item industry"><i class="icon icon_tag top-1"></i>@i.tag</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }else{
+                    <span class="tipsSpan">尚未参与,<a href="/activityList/1"><font style="color: orange">参与活动</font></a></span>
+                }
+            </div>
+        </div>
+    </div>
+    <!-- 弹出窗 -->
+    <div class='layer invitation' style="display:none;" id="publishLayer">
+        <div class='layer_cover'></div>
+        <div class='layer_center'>
+            <div class='layer_main'>
+                <div class="close_btn" id="closeLayer"><img src="/assets/images/icon/close_btn.png" /></div>
+                <div class='layer_title ta_c'>
+                    <p>请先实名认证，方可报名。</p>
+                </div>
+                <p class='ta_c'><a href="/authView"><button class='btn btn-orange layer_submit'>去实名</button></a></p>
+            </div>
+        </div>
+    </div>
+
+}

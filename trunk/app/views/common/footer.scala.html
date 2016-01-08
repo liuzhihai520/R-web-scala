@@ -1,0 +1,51 @@
+@()(implicit data: core.mvc.ViewData[_])
+<div class='foot'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-xs-3 no-padding info' >
+                <p><img src='/assets/images/logo.png' width='80' style="float:left;margin-right: 10px;"></p>
+                <p style="font-size: 14px">全国热线</p>
+                <p class='phone'><img src="/assets/images/icon/phone.png" style="width: 38px;margin-top: -3px;"/>021-20226053</p>
+                <p class='time'>(周一至周五 9:00~18:00)</p>
+            </div>
+            <div class='col-xs-6 no-padding link '>
+                <dl>
+                    <dt>导航</dt>
+                    <a href="/itemList"><dd>项目精选</dd></a>
+                    <a href="/FAQ/4/0"><dd>风险提示</dd></a>
+                    <a href="/FAQ/2/0"><dd>服务协议</dd></a>
+                    <a href="/aboutUs/1"><dd>联系我们</dd></a>
+                </dl>
+                <dl>
+                    <dt>帮助</dt>
+                    <a href="/FAQ/1/2"><dd>如何申请领投人</dd></a>
+                    <a href="/FAQ/1/3"><dd>如何发布项目</dd></a>
+                    <a href="/FAQ/1/4"><dd>如何支付投资款</dd></a>
+                </dl>
+                @for(i <- 0 to data.linkList.size - 1){
+                    @if(i <= 3){
+                        @if(i == 0){<dl>}
+                        @if(i == 0){<dt>友情链接</dt>}
+                        <a href="@data.linkList(i).url" target="_blank"><dd>@data.linkList(i).name</dd></a>
+                        @if(i == 3){</dl>}
+                    }
+                    @if(i > 3 && i <= 7){
+                        @if(i == 4){<dl style="margin-left: -10px;">}
+                        @if(i == 4){<dt>&nbsp;</dt>}
+                        <a href="@data.linkList(i).url" target="_blank"><dd>@data.linkList(i).name</dd></a>
+                        @if(i == 7){</dl>}
+                    }
+                    @if(i > 8 && i <= 11){
+                        @if(i == 8){<dl style="margin-left: -10px;">}
+                        @if(i == 8){<dt>&nbsp;</dt>}
+                        <a href="@data.linkList(i).url" target="_blank"><dd>@data.linkList(i).name</dd></a>
+                        @if(i == 11){</dl>}
+                    }
+                }
+            </div>
+
+            <div class='col-xs-3 no-padding download'></div>
+        </div>
+    </div>
+    <div class='copyright' style="margin: 0px auto;width: 100%;text-align: center;"><small></br>Copyright © 2015    睿就投 www.ruijiutou.com  All RightReserved.</small></div>
+</div>

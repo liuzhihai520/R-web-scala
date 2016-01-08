@@ -1,0 +1,279 @@
+.content{
+	background:#fff;
+}
+.row{
+	position:relative;
+}
+.user_base_info{
+	width:100%;
+	height:200px;
+	padding:60px 0;
+	background:#efefef;
+	margin-bottom:10px;
+	margin:0 0 10px;
+}
+.right_operation{
+	position:absolute;
+	top:0;
+	right:0;
+	display:inline-block;
+	vertical-align:middle;
+	height:100%;
+}
+.right_operation:after{
+	content:'';
+	display:inline-block;
+	vertical-align:middle;
+	height:100%;
+	width:0;
+}
+.right_operation a{
+	color:#818181;
+	margin-left:10px;
+}
+.right_operation .glyphicon{
+	margin-right:6px;
+	font-size:18px;
+	vertical-align:middle;
+}
+.head_portrait{
+	width:80px;
+	height:80px;
+	background:#f9f9f9;
+	border-radius:100%;
+	overflow:hidden;
+}
+.info_list{
+	color:#555;
+	margin-left:-15px;
+}
+.info_list p{
+	margin-top:10px;
+}
+.user_center_nav{
+	height:60px;
+	line-height:60px;
+	margin-bottom:30px;
+	border-bottom:1px solid #f9f9f9;
+}
+.nav_item{
+	height:60px;
+	font-size:18px;
+	text-align:center;
+}
+.nav_item.active{
+	border-bottom:4px solid #ffb82f;
+}
+.btn_start_project{
+	width:160px;
+}
+.result{
+	margin-bottom:80px;
+	display:none;
+}
+.result_row {
+	height:195px;
+	margin-bottom:30px;
+}
+.result_row .img_container{
+	overflow:hidden;
+	height:100%;
+}
+.row_title{
+	font-size:16px;
+	font-weight:900;
+}
+.row_title .btn{
+	font-size:12px;
+	padding:5px 20px;
+	height:auto;
+	margin-left:15px;
+}
+.row_des{
+	margin:20px 0 30px;
+	color:#828282;
+}
+.row_opts {
+	margin-bottom:30px;
+}
+.row_opts span{
+	margin-right:40px;
+	color:#b2b2b2;
+}
+.row_opts font{
+	color:#000;
+}
+.row_opts .orange{
+	color:#f15d15;
+}
+.row_opts big{
+	font-size:24px;
+}
+.info_item {
+	color: #313131;
+	margin-right: 40px;
+}
+
+.info_item .icon {
+	display: inline-block;
+	height: 18px;
+	margin-right: 10px;
+	vertical-align: top;
+	width: 18px;
+}
+.info_item .icon.icon_location {
+	background: rgba(0, 0, 0, 0) url("../../images/icon/location.png") no-repeat scroll 0 1px;
+}
+.info_item .icon.icon_tag {
+	background: rgba(0, 0, 0, 0) url("../../images/icon/tag.png") no-repeat scroll 0 2px;
+}
+.info_row{
+	margin-bottom:30px;
+}
+.info_row .input_field{
+	width:430px;
+	margin-top:-6px;
+}
+.edit_btn{
+	width:140px;
+	padding:4px 30px;
+	height:auto;
+}
+.setPwd_box {
+	width:350px;
+	margin:30px auto;
+}
+.setPwd_box .form-control{
+	height:40px;
+}
+.setPwd_box .form-group{
+	margin:0;
+}
+.setPwd_box .form-block-inline {
+	display: inline-block;
+	vertical-align: top;
+	width: 160px;
+}
+.setPwd_box .form-block-inline1 {
+	display: inline-block;
+}
+.setPwd_box .input_field{
+	margin:0;
+	height:40px;
+}
+.setPwd_box .error_msg {
+	height: 20px;
+	line-height: 20px;
+	margin-bottom: 0;
+	color: red;
+}
+.error_msg {
+	height: 20px;
+	line-height: 20px;
+	margin-bottom: 0;
+	color: red;
+}
+.upload_btn{
+	color:#fff;
+	background:#ff9a23;
+	padding:4px 0;
+}
+.upload_ex{
+	font-size:12px;
+	color:#828282;
+	line-height:40px;
+	height:40px;
+	margin-bottom:0;
+}
+.preview_container{
+	margin-top:5px;
+	width:200px;
+	height:200px;
+	border:1px solid #ccc;
+}
+.upload_field{
+	display:inline-block;
+	vertical-align:middle;
+}
+.upload_example_img{
+	width:280px;
+	height:180px;
+	background:url(../../images/upload_example_img.jpg);
+	position:absolute;
+	top:60px;
+	right:200px;
+}
+.realname_certification .tips{
+	color:#777;
+	margin:30px auto;
+}
+.realname_certification .status_waiting{
+	background:url(../../images/status_waiting.jpg) center center no-repeat;
+	height:400px;
+}
+.row .select_left  {
+	margin-left:5px;
+}
+.realExamine,.realSuccess{
+	min-height:700px;
+	text-align:center;
+	line-height:70px;
+	padding-top:20px;
+}
+
+.right_operation2{
+height: 100%;
+margin-top: 30px;
+float:right;
+margin-right: 20px;
+}
+
+.height420{
+min-height: 420px;
+}
+.tipsSpan {
+	font-size: 21px;
+	color: #828282;
+	margin-left: 20%;
+	padding-top: 100px;
+	height: 100px;
+	float-wrap: 400;
+	text-align: center;
+	width:100%;
+}
+
+/* 2015-12-25 add */
+.user_base_info .phone{
+	font-size:16px;
+	color:#545454;
+}
+.user_base_info .info_list_2{
+	color:#818181;
+}
+.user_base_info .phone {
+	height:auto;
+	overflow:hidden;
+}
+.user_base_info .phone p {
+	float:left;
+	margin-right:5px;
+}
+.user_base_info .phone p.certified{
+	display:block;
+	width:17px;
+	height:20px;
+	background:url(../../images/icon/certified.png) center no-repeat;
+}
+.process_bar_yellow {
+	background: #e0e0e0;
+	width: 215px;
+	height: 7px;
+	border-radius: 2px;
+	-webkit-border-radius:2px;
+	-moz-border-radius:2px;
+	overflow: hidden;
+}
+.process_bar_yellow .current {
+	background: #ffb200;
+	height: 7px;
+}

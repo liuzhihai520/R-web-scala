@@ -1,0 +1,64 @@
+@(newsInfo:model.News,newsPage:core.utils.Pages[model.News])(implicit data: core.mvc.ViewData[_])
+@data.style("stylesheets/css/information.css")(0)
+@data.style("stylesheets/css/page980.css")(1)
+@data.script("javascripts/js/tipBox.js")(0)
+@main{
+    <div class='content'>
+        <div class='wrapper clearfix'>
+            <p class='location_nav'>
+                <span><a href="/">首页</a> ／ <a href="/newsList/1">资讯</a> ／</span> @newsInfo.title
+            </p>
+            <div class='page980_pannel information_pannel'>
+                <div class='wrapper_left'>
+                    <div class='main'>
+                        <div class='pannel_title'>
+                            <div class='row'>
+                                <h1 class='col-xs-12'>@newsInfo.title</h1>
+                            </div>
+                            <div class='sub_info row'>
+                                <div class='col-xs-8 sub_info_left no-padding'>@newsInfo.addtime.toString("YYYY年MM月dd日 hh:mm") @newsInfo.source</div>
+                                <div class='col-xs-4 sub_info_right no-padding'>
+                                    <div class="share" id="share">
+                                        <div id="shareSpan"><span>分享:</span></div>
+                                        <div class="bdsharebuttonbox">
+                                            <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+                                            <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+                                            <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                                            <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+                                        </div>
+                                        <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"@{newsInfo.title}-来自于@Html("@睿就投")","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class='pannel_tag'>标签：@newsInfo.tag</p>
+                            <p class='reading_guidance'>
+                                @newsInfo.introduction
+                            </p>
+                        </div>
+                        <div class='pannel_content'>
+                            @Html(newsInfo.content)
+                        </div>
+                    </div>
+                </div>
+                <div class='wrapper_right'>
+                    <div class='aside_opts aside_opts_type1'>
+                        <div class='option_title'>精华推荐</div>
+                        <div class='option_content'>
+                            <ul>
+                            @for(i <- newsPage.list) {
+                                <li><a href="/newsInfo/@i.id">@i.title</a></li>
+                            }
+                            </ul>
+                        </div>
+                    </div>
+                    <div class='aside_opts cellphone'>
+                        <div class='option_title_type1'>手机阅读</div>
+                        <div class='option_content no-padding ta_c'>
+                            <img src='@data.adminstatic@newsInfo.qrcode' width="200" height="200"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

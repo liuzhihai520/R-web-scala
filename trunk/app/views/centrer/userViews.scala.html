@@ -1,0 +1,293 @@
+@import org.joda.time.DateTime
+@(member:Option[model.Member],jobList:List[model.TypeClass],memberForm: Form[form.MemberForm])(implicit data: core.mvc.ViewData[_])
+@data.style("stylesheets/css/userCenter.css")(0)
+@data.script("javascripts/webuploader/webuploader.flashonly.js")(0)
+@data.script("javascripts/My97DatePicker/WdatePicker.js")(1)
+@data.script("javascripts/js/center/user/userImage.js")(2)
+@data.script("javascripts/js/city.js")(3)
+@data.script("javascripts/js/center/user/userView.js")(4)
+@main {
+    <div class='content'>
+        @views.html.common.usertop(member,1)
+        <div class='container'>
+            <div class='row user_center_nav'>
+                <a href="/userView" style="cursor: pointer"><div class='col-xs-2 nav_item active'>个人信息</div></a>
+                <a href="/password" style="cursor: pointer"><div class='col-xs-2 nav_item'>密码设置</div></a>
+                <a href="/authView" style="cursor: pointer"><div class='col-xs-2 nav_item'>实名认证</div></a>
+            </div>
+            <form action="/saveMemberView" id="form" name="form" method="post">
+                <div class='result' style="display: block;">
+                    <div class='row info_row'>
+                        <div class='col-xs-4 ta_r'>头像：</div>
+                        <div class="col-xs-4">
+                            <span>
+                                <div id="uploader" style="width:30%">
+                                    <!--用来存放文件信息-->
+                                    <div id="thelist" class="uploader-list"></div>
+                                    <div class="btn upload_btn">
+                                        <div id="picker">选择文件</div>
+                                    </div>
+                                </div>
+                                <span class="upload_ex">支持jpg、jpeg、png、gif格式，大小：640x640px</span>
+                            </span>
+                            <input type="hidden" id="head" name="head" value="@member.get.head.getOrElse("")"/>
+                            <div class='preview_container img_center_middle'><img src="@data.static/avatar/640/640/@member.get.head.getOrElse("")" id="imgView"/></div>
+                            <p class="error_msg" id="avatarError"></p>
+                        </div>
+                        <div class='col-xs-1 ta_r' style="color:red;">*</div>
+                    </div>
+                    <div class='row info_row left120'>
+                        <div class='col-xs-4 ta_r'>姓名：</div>
+                        <div class='col-xs-4'>
+                            <p class="input_field">
+                                @if(member.get.status.getOrElse("0").toInt == 2){
+                                    <input class="form-control" id="name" name="name" value="@member.get.name" readonly/>
+                                }else{
+                                    <input class="form-control" id="name" name="name" value="@member.get.name"/>
+                                }
+                            </p>
+                            @{
+                                if(memberForm("name").hasErrors){
+                                        <p class="error_msg" id="nameError">请输入姓名</p>
+                                }else{
+                                        <p class="error_msg" id="nameError"></p>
+                                }
+                            }
+                        </div>
+                        <div class='col-xs-1 ta_r' style="color:red;">*</div>
+                    </div>
+                    <div class='row info_row left120 necessary'>
+                        <div class='col-xs-4 ta_r'>性别：</div>
+                        <input type="hidden" id="sex" name="sex" value="@member.get.sex.getOrElse("")"/>
+                        <div class='col-xs-4'>
+                            <p class="input_field">
+                                <span class="radio-inline">
+                                    <label>
+                                        @if(member.get.sex.getOrElse("").equals("男")){
+                                            @if(member.get.status.getOrElse("0").toInt == 2){
+                                                <input type="radio" id="man" name="sexs" value="男" checked="checked" disabled/><span>男</span>
+                                            }else{
+                                                <input type="radio" id="man" name="sexs" value="男" checked="checked"/><span>男</span>
+                                            }
+                                        }else{
+                                            @if(member.get.status.getOrElse("0").toInt == 2){
+                                                <input type="radio" id="man" name="sexs" value="男" disabled/><span>男</span>
+                                            }else{
+                                                <input type="radio" id="man" name="sexs" value="男"/><span>男</span>
+                                            }
+                                        }
+                                    </label>
+                                </span>
+                                <span class="radio-inline">
+                                    <label>
+                                        @if(member.get.sex.getOrElse("").equals("女")){
+                                            @if(member.get.status.getOrElse("0").toInt == 2){
+                                                <input type="radio" id="woman" name="sexs" value="女" checked="checked" disabled/> <span>女</span>
+                                            }else{
+                                                <input type="radio" id="woman" name="sexs" value="女" checked="checked"/> <span>女</span>
+                                            }
+                                        }else{
+                                            @if(member.get.status.getOrElse("0").toInt == 2){
+                                                <input type="radio" id="woman" name="sexs" value="女" disabled/> <span>女</span>
+                                            }else{
+                                                <input type="radio" id="woman" name="sexs" value="女"/> <span>女</span>
+                                            }
+                                        }
+                                    </label>
+                                </span>
+                            </p>
+                            @{
+                                if(memberForm("sex").hasErrors){
+                                        <p class="error_msg" id="sexError">请选择性别</p>
+                                }else{
+                                        <p class="error_msg" id="sexError"></p>
+                                }
+                            }
+                        </div>
+                        <div class='col-xs-1 ta_r' style="color:red;">*</div>
+                    </div>
+                    <div class='row info_row left120'>
+                        <div class='col-xs-4 ta_r'>出生日期：</div>
+                        <div class='col-xs-4'>
+                            <p class="input_field">
+                                @if(member.get.status.getOrElse("0").toInt == 2){
+                                    <input type="text" id="birthday" name="birthday" class="form-control" value="@member.get.birthday.getOrElse(new DateTime()).toString("yyyy-MM-dd")" readonly/>
+                                }else{
+                                    <input type="text" id="birthday" name="birthday" class="form-control" value="@member.get.birthday.getOrElse(new DateTime()).toString("yyyy-MM-dd")" readonly
+                                        onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'});"
+                                    />
+                                }
+                            </p>
+                            @{
+                                if(memberForm("birthday").hasErrors){
+                                    <p class="error_msg" id="birthdayError">请选择出生日期</p>
+                                }else{
+                                    <p class="error_msg" id="birthdayError"></p>
+                                }
+                            }
+                        </div>
+                        <div class='col-xs-1 ta_r' style="color:red;">*</div>
+                    </div>
+
+                    <div class='row info_row necessary'>
+                        <div class='col-xs-4 ta_r'>用户名：</div>
+                        <div class='col-xs-4'>
+                            <p class="input_field">
+                                <input class="form-control" id="accountname" name="accountname" value="@member.get.accountname"/>
+                            </p>
+                            @{
+                                if(memberForm("accountname").hasErrors){
+                                    <p class="error_msg" id="accountnameError">用户名为2-18位</p>
+                                }else if(memberForm("isRegUserName").hasErrors){
+                                    <p class="error_msg" id="accountnameError">用户名已存在</p>
+                                }else{
+                                    <p class="error_msg" id="accountnameError"></p>
+                                }
+                            }
+                        </div>
+                        <div class='col-xs-1 ta_r' style="color:red;">*</div>
+                    </div>
+
+                    <div class='row info_row necessary'>
+                        <div class='col-xs-4 ta_r'>手机号：</div>
+                        <div class='col-xs-4'>
+                            <p class="input_field">
+                                <input class="form-control" id="tel" name="tel" value="@member.get.tel" readonly/>
+                            </p>
+                            @{
+                                if(memberForm("tel").hasErrors){
+                                        <p class="error_msg" id="telError">请输入手机号</p>
+                                }else{
+                                        <p class="error_msg" id="telError"></p>
+                                }
+                            }
+                        </div>
+                        <div class='col-xs-1 ta_r' style="color:red;">*</div>
+                    </div>
+
+                    <div class='row info_row '>
+                        <div class='col-xs-4 ta_r'>邮箱：</div>
+                        <div class='col-xs-4'>
+                            <p class="input_field">
+                                <input class="form-control" id="email" name="email" value="@member.get.email.getOrElse("")"/>
+                            </p>
+                            @{
+                                if(memberForm("email").hasErrors){
+                                        <p class="error_msg" id="emailError">请输入邮箱</p>
+                                }else{
+                                        <p class="error_msg" id="emailError"></p>
+                                }
+                            }
+                        </div>
+                        <div class='col-xs-1 ta_r' style="color:red;">*</div>
+                    </div>
+
+                    <div class='row info_row '>
+                        <div class='col-xs-4 ta_r'>城市：</div>
+                        <div class='col-xs-4'>
+                            <div class='form-inline'>
+                                <p class="input_field">
+                                    <select class="form-control" id="ddlProvince" name="province">
+                                        <option>--请选择--</option>
+                                    </select>
+                                    <span class='ex'>省（直辖市）</span>
+                                    <input type="hidden" id="citys" value="@member.get.city.getOrElse("")"/>
+                                    <select class="form-control" id="ddlCity" name="city">
+                                        <option>--请选择--</option>
+                                    </select>
+                                    <span class='ex'>市</span>
+                                </p>
+                                @{
+                                    if(memberForm("province").hasErrors){
+                                            <p class="error_msg" id="cityError">请选择省份</p>
+                                    }else if(memberForm("city").hasErrors){
+                                            <p class="error_msg" id="cityError">请选择城市</p>
+                                    }else{
+                                            <p class="error_msg" id="cityError"></p>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class='col-xs-1 ta_r' style="color:red;">*</div>
+                    </div>
+
+                    <div class='row info_row '>
+                        <div class='col-xs-4 ta_r'>公司名称：</div>
+                        <div class='col-xs-4'>
+                            <p class="input_field">
+                                <input class="form-control" id="pcname" name="pcname" value="@member.get.pcname.getOrElse("")"/>
+                            </p>
+                            @{
+                                if(memberForm("pcname").hasErrors){
+                                        <p class="error_msg" id="pcnameError">请输入公司名称</p>
+                                }else{
+                                        <p class="error_msg" id="pcnameError"></p>
+                                }
+                            }
+                        </div>
+                        <div class='col-xs-1 ta_r' style="color:red;">*</div>
+                    </div>
+                    <div class='row info_row '>
+                        <div class='col-xs-4 ta_r'>职位：</div>
+                        <div class='col-xs-4'>
+                            <p class="input_field">
+                                <select class="form-control" id="job" name="job">
+                                @for(i <- jobList){
+                                    @if(i.id == member.get.job.getOrElse(0)){
+                                        <option value="@i.id" selected>---@i.name---</option>
+                                    }else{
+                                        <option value="@i.id">---@i.name---</option>
+                                    }
+                                }
+                                </select>
+                            </p>
+                            @{
+                                if(memberForm("job").hasErrors){
+                                        <p class="error_msg">请选择职位</p>
+                                }else{
+                                        <p class="error_msg"></p>
+                                }
+                            }
+                        </div>
+                        <div class='col-xs-1 ta_r' style="color:red;">*</div>
+                    </div>
+                    <div class='row info_row '>
+                        <div class='col-xs-4 ta_r'>投资理念：</div>
+                        <div class='col-xs-8'>
+                            <p class="input_field">
+                                <input class="form-control" id="investmentideas" name="investmentideas" value="@member.get.investmentideas.getOrElse("")"/>
+                            </p>
+                            @{
+                                if(memberForm("investmentideas").hasErrors){
+                                        <p class="error_msg" id="investmentideasError">请输入投资理念</p>
+                                }else{
+                                        <p class="error_msg" id="investmentideasError"></p>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class='row info_row'>
+                        <div class='col-xs-4 ta_r'>个人简介：</div>
+                        <div class='col-xs-8'>
+                            <p class="input_field">
+                                <textarea class="form-control" id="description" name="description">@member.get.description.getOrElse("")</textarea>
+                            </p>
+                            @{
+                                if(memberForm("description").hasErrors){
+                                    <p class="error_msg" id="descriptionError">请输入投资理念</p>
+                                }else if(memberForm("updateError").hasErrors){
+                                    <p class="error_msg" id="descriptionError">更新用户信息失败</p>
+                                }else{
+                                    <p class="error_msg" id="descriptionError"></p>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class='row info_row'>
+                        <div class='col-xs-12 ta_c'><button type="button" class='btn btn-orange edit_btn' id="save">保存</button></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+}

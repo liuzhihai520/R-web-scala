@@ -1,0 +1,467 @@
+.project_sponsor .img_container{
+	width:60px;
+	height:60px;
+	border-radius:100%;
+	overflow:hidden;
+}
+.project_sponsor .img_container img{
+	width:60px;
+	height:60px;
+}
+.project_sponsor .content_container{
+	margin-left:-15px;
+}
+.project_sponsor .company_name{
+	font-size:18px;
+	margin-top:2px;
+}
+.project_sponsor .company_license{
+	font-size:12px;
+	color:#505050;
+}
+.project_sponsor .license_icon{
+	display:inline-block;
+	width:18px;
+	height:18px;
+	font-style:normal;
+	border-radius:100%;
+	background:#ffb219;
+	color:#fff;
+	text-align:center;
+	line-height:20px;
+	margin-right:5px;
+}
+.project_sponsor .phone{
+	border-top:1px dashed #d0d0d0;
+	margin-top:30px;
+	height:40px;
+	margin-bottom:0;
+	text-align:center;
+	font-size:18px;
+	line-height:70px;
+}
+.project_sponsor .phone .glyphicon{
+	color:#ffb219;
+	margin-right:6px;
+}
+
+.statistic{
+	border:1px solid #d0d0d0;
+	background:#fff;
+	margin-top:20px;
+	padding:0 20px;
+}
+.statistic_title{
+	border-bottom:1px solid #d0d0d0;
+	height:60px;
+	font-size:18px;
+	line-height:60px;
+}
+.statistic_content .table{
+}
+.statistic_content .table td{
+	border:0 !important;
+	
+}
+.info_item{
+	color:#313131;
+	margin-right:40px;
+}
+.info_item .icon{
+	display:inline-block;
+	width:18px;
+	height:18px;
+	vertical-align:top;
+	margin-right:10px;
+}
+.info_item .icon.icon_location {
+    background: rgba(0, 0, 0, 0) url("../../images/icon/location.png") no-repeat scroll 0 1px;
+}
+.info_item .icon.icon_tag {
+    background: rgba(0, 0, 0, 0) url("../../images/icon/tag.png") no-repeat scroll 0 2px;
+}
+.financing_states p{
+	font-size:16px;
+	margin-bottom:25px;
+}
+.financing_states p em{
+	font-style:normal;
+	color:#ffa31f;
+}
+.financing_states p.border-bottom{
+	font-size:16px;
+	margin-bottom:25px;
+    padding-bottom:25px;
+    border-bottom:1px dashed #5f5f5f;
+}
+.financing_states p.last{
+	text-align:center;
+    background: rgba(0, 0, 0, 0) url("../../images/icon/phone.png") no-repeat scroll 0 2px;
+    margin-left:-5px;
+}
+.financing_states p span{
+	font-size:14px;
+	color:#5f5f5f;
+}
+.financing_states p.last span{
+	display:block;
+    margin-left:-30px;
+}
+.financing_states p:last-child{
+	margin-bottom:0;
+}
+.financing_states .investor_info{
+	margin-bottom:15px;
+	width:100%;
+	height:80px;
+}
+.financing_states .investor_info img{
+	width:70px;
+	border-radius:50%;
+}
+.financing_states .investor_info p{
+	float:left;
+	margin-right:20px;
+}
+.financing_states .investor_info h6{
+	font-size:16px;
+	font-weight:bold;
+	float:left;
+}
+.financing_states .investor_info h6 span{
+	display:block;
+	font-size:13px;
+	float:left;
+	margin-top:10px;
+}
+.process_bar_tag{
+	margin-top:4px;
+	margin-bottom:15px;
+}
+.project_process{
+	height:130px;
+	background:url(../../images/process.jpg) no-repeat center center #fff;
+	background-size:95% auto;
+	margin-bottom:20px;
+}
+.project_main_box .content_container .status_item{
+	margin-bottom:10px;
+	font-size:16px;
+}
+.project_main_box .content_container .status_item big{
+	font-size:30px;
+	font-weight: 600;
+}
+.status_tag{
+	position:absolute;
+	right:-68px;
+	top:10px;
+	width:126px;
+	height:35px;
+	color:#fff;
+	background:#30d790;
+	font-size:18px;
+
+	text-align:center;
+	line-height:35px;
+	
+}
+.status_gray{
+	position:absolute;
+	right:-68px;
+	top:10px;
+	width:126px;
+	height:35px;
+	color:#fff;
+	background:#949494;
+	font-size:18px;
+
+	text-align:center;
+	line-height:35px;
+
+}
+.status_tag:after{
+	content:'';
+	position:absolute;
+	right:0;
+	top:35px;
+	width: 0;
+    height: 0;
+    border-top: 10px solid #1ea56b;
+    border-right: 13px solid transparent;
+}
+.status_gray:after{
+	content:'';
+	position:absolute;
+	right:0;
+	top:35px;
+	width: 0;
+	height: 0;
+	border-top: 10px solid #A1A1A1;
+	border-right: 13px solid transparent;
+}
+
+.page980_pannel .main .pannel_title{
+	height:70px;
+	line-height:70px;
+	padding:0 20px;
+	font-size:22px;
+	border-bottom:1px solid #d0d0d0;
+	text-align:center;
+}
+.end .status_tag{
+	background:#868686;
+}
+.end .status_tag:after{
+	 border-top: 10px solid #5e5e5e;
+}
+.end  .operation_group{
+	display:none;
+}
+.project_limit .project_name{
+	font-size:21px;
+	margin:30px 0;
+}
+.project_limit .project_info{
+	margin-bottom:30px;
+}
+.project_limit .project_des{
+	height:108px;
+}
+.login_for_more{
+	font-size:18px;
+	color:#f85f1c;
+	text-align:center;
+	margin-top:30px;
+}
+.main_box{
+	width:980px;
+	height:480px;
+	background:rgba(255,255,255,0.83);
+	border-radius:8px;
+	margin:0 auto;
+	overflow:hidden;
+	position:relative;
+}
+.login_box,.regist_box,.forgetpwd_box{
+	height:100%;
+	padding:30px 60px;
+}
+.box_title{
+	font-size:18px;
+	color:#4d4d4d;
+}
+.main_box .form-group {
+	margin-bottom:0;
+}
+.main_box .form-control,.main_box .btn{
+	height:40px;	
+}
+.error_msg{
+	margin-bottom:0;
+	height:20px;
+	line-height:20px;
+    color: red;
+}
+.box_title{
+	margin-bottom:30px;
+}
+.box_control{
+	margin-top:20px;
+}
+.box_control a{
+	color:#505050;
+}
+.main_box  .form-block-inline{
+	display:inline-block;
+	width:160px;
+	vertical-align:top;
+}
+.main_box  .form-block-inline1{
+	display:inline-block;
+}
+.main_box  .input_field{
+	max-height:40px;
+	margin:0;
+}
+.main_box .checkbox{
+	margin:0;
+}
+.break_line{
+	height:390px;
+	width:1px;
+	background:#c9c9c9;
+	position:absolute;
+	top:20px;
+	left:468px;
+}
+.roadShow_main_box{
+	/*height:370px;*/
+}
+.layer_title{
+	font-size:18px;
+}
+.layer_title .ex{
+	font-size:12px;
+	color:#828282;
+	margin-top:-8px;
+}
+.layer_content.position-prefix{
+	margin-left:-50px;
+	padding-right:50px;
+}
+.enter_login .layer_content.position-prefix{
+	margin-left:0;
+	padding-right:0;
+}
+.enter_login .layer_submit{
+    width:295px;
+}
+.layer_content .input_field{
+	margin-top:-6px;
+	position:relative;
+	margin-bottom:0;
+	height:40px;
+}
+.layer_submit{
+    width: 390px;
+}
+.form-block-inline{
+    display: inline-block;
+    vertical-align: top;
+    width: 160px;
+}
+.layer_content .form-control{
+	height:40px;
+}
+.input_field_ex{
+	position:absolute;
+	right:10px;
+	top:0;
+	line-height:40px;
+}
+.cancel_enter .layer_title .ex{
+}
+.cancel_enter .layer_title .ex em{
+	color:#ffa406;
+	font-size:36px;
+}
+.cancel_enter_btn{
+	background:#e7e7e7;
+	color:#000;
+	border:0;
+}
+.enter_login .layer_title .ex{
+	font-size:12px;
+	color:#ff2b2b;
+	margin:10px auto 30px;
+}
+.enter_login .pass_reg{
+    margin-top:15px;
+}
+.enter_login .forget_pass{
+    color:#000;
+}
+.enter_login .reg{
+    color:#4cd89f;
+    float:right;
+}
+.input_field .agreement {
+    color:#000;
+    display:block;
+    float:right;
+    margin-right:145px;
+}
+.input_field .agreement a {
+    color:#43a9ff;
+}
+
+.ml-30 {
+	margin-left:-30px;
+}
+.top-1{
+	margin-top: -1px;
+}
+
+/* 领投人 */
+.project_investor .process_bar {
+    /*margin-top:70px;*/
+}
+.project_investor .user_center_nav {
+    height: 60px;
+    line-height: 60px;
+    margin: 0 0 30px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+.nav_item.active {
+    border-bottom: 1px solid #ffb82f;
+}
+.nav_item.active a {
+    color:#ffb82f;
+    text-decoration:none;
+}
+.nav_item {
+    height: 60px;
+    font-size: 18px;
+    text-align: center;
+
+}
+.nav_item a {
+    color:#7f7f7f;
+    text-decoration:none;
+}
+.investor_form {
+    background:#fff;
+    border-radius:3px;
+}
+.step_main {
+    padding-bottom:30px;
+    display:none;
+    margin:0 0 60px 0;
+
+}
+.invest_des .ta_c {
+    color:#ff2c2c;
+    font-size:18px;
+    margin:0 0 50px;
+}
+.project_investor .input_field {
+    color:#c1c1c1;
+}
+.project_investor .error_msg {
+    color:#ff4444;
+}
+.project_investor .form-block-inline {
+    width:200px;
+}
+.project_investor .btn-orange {
+    height: 40px;
+    /*line-height: 14px;*/
+}
+.project_investor .checkbox {
+    display:block;
+    float:left;
+    margin:2px 5px 0 0;
+}
+.project_investor .agreement {
+    float:left;
+    margin:0;
+}
+.project_investor .form-group {
+    margin:0 0 5px 0;
+}
+.project_investor .submit_btn{
+    width:470px;
+    height:40px;
+    background:#ffb82f;
+    color:#fff;
+    line-height:20px;
+    margin:10px 0 0 -100px;
+}
+/*.project_investor p {*/
+    /*margin:0 0 5px;*/
+/*}*/
+.page980_pannel .pannel_content p img {
+	max-width:100%;
+}
+

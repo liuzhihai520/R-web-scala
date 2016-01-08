@@ -1,0 +1,18 @@
+@(member: Option[model.Member], authForm: Form[form.UserAuthForm])(implicit data: core.mvc.ViewData[_])
+@data.style("stylesheets/css/userCenter.css")(0)
+@main {
+    <div class='content'>
+        @views.html.common.usertop(member,1)
+        <div class='container'>
+            <div class='row user_center_nav'>
+                <a href="/userView" style="cursor: pointer"><div class='col-xs-2 nav_item'>个人信息</div></a>
+                <a href="/password" style="cursor: pointer"><div class='col-xs-2 nav_item'>密码设置</div></a>
+                <a href="/authView" style="cursor: pointer"><div class='col-xs-2 nav_item active'>实名认证</div></a>
+            </div>
+            <div class="realSuccess">
+                <img src="/assets/images/realSuccess.png" /><br />
+                认证成功！
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,616 @@
+@(member:model.ItemMember,item:Option[model.ItemProject],investList:List[model.Invest],ismain:Int,isInvest:Int,demo:Option[model.Demo],
+jobList:List[model.TypeClass],investMoney:Double,leader:Option[model.Invest])(implicit data: core.mvc.ViewData[_])
+@data.style("stylesheets/css/page980.css")(0)
+@data.style("stylesheets/css/project.css")(1)
+@data.style("stylesheets/css/home.css")(2)
+@data.script("javascripts/js/jquery.cookie.js")(0)
+@data.script("javascripts/js/component.js")(1)
+@data.script("javascripts/js/tipBox.js")(2)
+@data.script("javascripts/js/zclip/jquery.zclip.js")(3)
+@data.script("javascripts/js/eyes/zepto.custom.js")(4)
+@data.script("javascripts/js/eyes/hideShowPassword.min.js")(5)
+@data.script("javascripts/js/eyes/modernizr.custom.js")(6)
+@data.script("javascripts/js/project/regLogin.js")(7)
+@main{
+    <div class='content'>
+        <div class='wrapper clearfix'>
+            <input type="hidden" id="webURL" value="http://www.ruijiutou.com/item/@item.get.id"/>
+            <input type="hidden" id="projectId" value="@item.get.id"/>
+            <input type="hidden" id="ismain" value="@ismain"/>
+            @if(data.isAuth == false){
+                <div class='page980_main_box project_main_box clearfix project_limit'>
+                    <div class='img_container'>
+                        <img src="@data.static/@item.get.imgurl"/>
+                    </div>
+                    <div class='content_container'>
+                        <h2 class='project_name' style="margin-top: 60px;">@item.get.name</h2>
+                        <p class='project_info'>
+                            <span class='info_item location'><i class='icon icon_location'></i>@item.get.location</span>
+                        </p>
+                        <h3 class='project_des'>@Html(item.get.synopsis.getOrElse(""))</h3>
+                        <div class='status_tag'>
+                        @{
+                            if(item.get.status.equals("1")){
+                                    <span>审核中</span>
+                            }else if(item.get.status.equals("2")){
+                                    <span>审核通过</span>
+                            }else if(item.get.status.equals("4") && (item.get.endtime.get.getMillis - System.currentTimeMillis()) > 0){
+                                    <span>融资中</span>
+                            }else if(item.get.status.equals("5") || (item.get.endtime.get.getMillis - System.currentTimeMillis()) < 0){
+                                    <span>已结束</span>
+                            }
+                        }
+                        </div>
+                        <div class="share" id="share">
+                            <div id="shareSpan"><span>分享：&nbsp;</span></div>
+                            <div class="bdsharebuttonbox">
+                                <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+                                <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+                                <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                                <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+                            </div>
+                            <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"@{item.get.name}-来自于@Html("@睿就投")","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{},"image":{"viewList":["sqq","qzone","tsina","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["sqq","qzone","tsina","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+                        </div>
+                        <p class='login_for_more'>登录后可以查看更多项目信息</p>
+                    </div>
+                </div>
+            }else{
+                <h2 class='project_name'>@item.get.name</h2>
+                <p class='project_info'>
+                    <span class='info_item location'><i class='icon icon_location'></i>@item.get.location</span>
+                    <span class='info_item industry'><i class='icon icon_tag top-1'></i>@item.get.tag</span>
+                </p>
+                <h3 class='project_des'>@Html(item.get.synopsis.getOrElse(""))</h3>
+                <div class='page980_main_box project_main_box clearfix'>
+                    <div class='img_container'>
+                        <img src="@data.static/@item.get.imgurl"/>
+                    </div>
+                    <div class='content_container'>
+                        <p class='status_item'>@if(item.get.sign != 0){认缴人数：@{item.get.sign}人}</p>
+                        <p class='status_item'>计划融资：<big>@{item.get.financingsum}</big>万元</p>
+                        <p class='status_item'>已认购金额：<big>@{item.get.financingamount}</big>万元 </p>
+                        <p class="status_item">起投金额：<big>@item.get.startnum.getOrElse(0)</big>万元</p>
+                        <p class='status_item'>报名剩余：
+                            @if(item.get.status.equals("5") || (item.get.endtime.get.getMillis - System.currentTimeMillis()) < 0){
+                                <big>0</big>天
+                            }else{
+                                <big>@item.get.day</big>天
+                            }</p>
+                        <div class='process_bar' data-value='@{item.get.schedules}'>
+                            <div class='current'></div>
+                        </div>
+                        <p class='process_bar_tag'>已融：@{item.get.schedules}%</p>
+                        <div class='row operation_group'>
+                            <div class='col-xs-6'>
+
+                                @if(item.get.status.equals("5") || (item.get.endtime.get.getMillis - System.currentTimeMillis()) < 0){
+                                    <a class='btn btn-block btn-gray enter_btn disabled' href="javascript:;">报名结束</a>
+                                }else{
+                                    @if(isInvest == 0){
+                                        <a class='btn btn-block btn-orange enter_btn' id="signUp" href="javascript:;">立即报名</a>
+                                    }else{
+                                        <a class='btn btn-block btn-gray enter_btn' id="gaveUp" href="javascript:;">取消报名</a>
+                                    }
+                                }
+                            </div>
+                            <div class='col-xs-6'>
+                                <a class='btn btn-block btn-green invitation' id="investBtn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;邀请</a>
+                            </div>
+                        </div>
+                        <div class="share" id="share">
+                            <div id="shareSpan"><span>分享：&nbsp;</span></div>
+                            <div class="bdsharebuttonbox">
+                                <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+                                <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+                                <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                                <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+                            </div>
+                            <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"@{item.get.name}-来自于@Html("@睿就投")","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+                        </div>
+                        @{
+                            if(item.get.status.equals("1")){
+                                    <div class='status_tag'><span>审核中</span></div>
+                            }else if(item.get.status.equals("2")){
+                                    <div class='status_tag'><span>审核通过</span></div>
+                            }else if(item.get.status.equals("4") && (item.get.endtime.get.getMillis - System.currentTimeMillis()) > 0){
+                                    <div class='status_tag'><span>融资中</span></div>
+                            }else if(item.get.status.equals("5") || (item.get.endtime.get.getMillis - System.currentTimeMillis()) < 0){
+                                    <div class='status_gray'><span>已结束</span></div>
+                            }
+                        }
+                    </div>
+                </div>
+            }
+            @if(data.isAuth == false){
+                <div class='page980_pannel project_pannel'>
+                    <div class='main_box row'>
+                        <!-- 登陆框-->
+                        <div class='login_box col-xs-6'>
+                            <p class='box_title'>登录</p>
+                            <form>
+                                <div class="form-group">
+                                    <p class='input_field'>
+                                        <input class="form-control" placeholder="用户名/手机号" id="username"/>
+                                    </p>
+                                    <p class='error_msg' id="usernameError"></p>
+                                </div>
+                                <div class="form-group">
+                                    <p class='input_field'>
+                                        <input type="password" class="form-control" placeholder="密码" id="loginPassword"/>
+                                    </p>
+                                    <p class='error_msg' id="loginPasswordError"></p>
+                                </div>
+                                <div class="form-group" style="display: none;" id="codebox">
+                                    <p class='input_field justify'>
+                                        <input class="form-control form-block-inline" placeholder="验证码" id="logCode"/>
+                                        <img src="/getCaptcha" height="40" class='form-block-inline1' id="logCaptcha" style="width: 120px ; margin-left: 20px ;"/>
+                                        <a href="javascript:;" id="logReflush" style="font-size: 12px ;">换一换</a>
+                                    </p>
+                                    <p class='error_msg' id="logCodeError"></p>
+                                </div>
+                                <button type="button" class="btn btn-block btn-orange" id="LoginSub">登录</button>
+                            </form>
+                        </div>
+                        <!-- 注册框-->
+                        <div class='regist_box col-xs-6'>
+                            <p class='box_title'>注册</p>
+                            <form>
+                                <div class="form-group">
+                                    <p class='input_field'>
+                                        <input class="form-control" placeholder="用户名" id="account"/>
+                                    </p>
+                                    <p class='error_msg' id="accountError"></p>
+                                </div>
+                                <div class="form-group">
+                                    <p class='input_field'>
+                                        <input class="form-control" placeholder="手机号" id="tel"/>
+                                    </p>
+                                    <p class='error_msg' id="telError"></p>
+                                </div>
+                                <div class="form-group">
+                                    <p class='input_field'>
+                                        <input type="password" class="form-control" placeholder="设置你的密码" id="password"/>
+                                    </p>
+                                    <p class='error_msg' id="passwordError"></p>
+                                </div>
+                                <div class="form-group">
+                                    <p class='input_field justify'>
+                                        <input class="form-control form-block-inline" placeholder="验证码" id="code"/>
+                                        <img src="/getCaptcha" height='40' class='form-block-inline1' id="captcha" style="width: 120px;margin-left: 20px;"/>
+                                        <a href="javascript:;" id="changeCode" style="font-size: 12px;">换一换</a>
+                                    </p>
+                                    <p class='error_msg' id="codeError"></p>
+                                </div>
+                                <div class="form-group">
+                                    <p class='input_field justify'>
+                                        <input class="form-control form-block-inline" placeholder="短信验证码" id="sortCode"/>
+                                        <button class="btn btn-block btn-orange form-block-inline" type="button" id="codeButton" onclick="sendCode()">获取验证码</button>
+                                    </p>
+                                    <p class='error_msg' id="sortCodeError"></p>
+                                </div>
+                                <div class="checkbox agreement">
+                                    <label class='input_field'>
+                                        <input type="checkbox" id="agree" name="agree"/>
+                                        同意成为会员并遵循<a href="/FAQ/2" target="_blank">《睿就投会员服务协议》</a>
+                                    </label>
+                                    <p class='error_msg' id="agreeError"></p>
+                                </div>
+                                <button type="Button" class="btn btn-block btn-green" id="regBtn">注册</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }else{
+                <div class='platform_process container no-padding platform_process_short'>
+                    <ul>
+                        <li class="fore1">定向邀约</li>
+                        <li class="fore2">预报名</li>
+                        <li class="fore3">线下路演</li>
+                        <li class="fore4">签署投资协议书</li>
+                        <li class="fore5">打款</li>
+                        <li class="fore6">工商事宜</li>
+                        <li class="fore7">投后管理</li>
+                    </ul>
+                </div>
+                <div class='page980_pannel project_pannel'>
+                    <div class='wrapper_left'>
+                        <div class='main'>
+                            <div class='pannel_title'>
+                                项目详情
+                            </div>
+                            <div class='pannel_content'>
+                            @Html(item.get.description.getOrElse(""))
+                            </div>
+                        </div>
+                        @if(investList.size > 0){
+                            <div class='statistic'>
+                                <div class='statistic_title row'>
+                                    <div class='col-xs-6 ta_l'>报名者</div>
+                                    <div class='col-xs-6 ta_r'>@{item.get.sign}人</div>
+                                </div>
+                                <div class='statistic_content'>
+                                    <table class='table table-justify'>
+                                    @for(i <- investList){
+                                        <tr>
+                                            <td>
+                                            @if(i.name.getOrElse("").length > 0){
+                                                @i.name.getOrElse("").substring(0,1)**
+                                            }
+                                            </td>
+                                            <td>@{i.investmentsum}万元</td>
+                                            <td>@i.addtime.get.toString("yyyy-MM-dd HH:mm")</td>
+                                        </tr>
+                                    }
+                                    </table>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class='wrapper_right'>
+                        <div class='aside_opts cellphone'>
+                            <div class='option_title_type1'>手机阅读</div>
+                            <div class='option_content no-padding ta_c'>
+                                <img src='/assets/images/project_qr_code.jpg'>
+                            </div>
+                        </div>
+
+                        <div class='aside_opts financing_states'>
+                            <div class='option_title'>融资说明</div>
+                            <div class='option_content'>
+                                <p>企业估值：@{item.get.valueation}万</p>
+                                <p>目标融资金额：@{item.get.financingsum}万元</p>
+                                <p>每股价格：@{item.get.shares.getOrElse(0)}元</p>
+                                <p>融资金额股权占比：@{item.get.equity}%</p>
+                                @if(isInvest >= 1){
+                                    <p><a href="@data.static/@item.get.plan" class='btn btn-block btn-orange'>下载商业计划书</a></p>
+                                }else{
+                                    <p><a href="javascript:;" class='btn btn-block btn-orange' id="downLoad">下载商业计划书</a></p>
+                                }
+                            </div>
+                        </div>
+
+                        <div class='aside_opts financing_states'>
+                            <div class='option_title'>融资用途</div>
+                            <div class='option_content'>
+                                <p>@Html(item.get.use.getOrElse(""))</p>
+                            </div>
+                        </div>
+
+                        <div class='aside_opts financing_states'>
+                            <div class='option_title'>公司信息</div>
+                            <div class='option_content'>
+                                <p>@item.get.pcname</p>
+                                <p><span>企业营业证：@item.get.licensenum</span></p>
+                                <p>
+                                    @if(item.get.islisting.getOrElse("").equals("1")){
+                                        <span>OTC：@item.get.listingcode.getOrElse("")</span>
+                                    }
+                                    @if(item.get.islisting.getOrElse("").equals("2")){
+                                        <span>新三板：@item.get.listingcode.getOrElse("")</span>
+                                    }
+                                </p>
+                                <p class="border-bottom"><span>公司网站：@item.get.web.getOrElse("")</span></p>
+                                <p><span>注册资本：@item.get.regcapital.getOrElse(0)万元</span></p>
+                                <p><span>企业估值：@item.get.valueation.getOrElse(0)万元</span></p>
+                                @if(isInvest == 0){
+                                    <p class="last"><span>报名后才能查看联系方式</span></p>
+                                }else{
+                                    <p><span>联系人：@item.get.linkman.getOrElse("")</span></p>
+                                    <p><span>联系电话：@item.get.linkmantel.getOrElse("")</span></p>
+                                }
+                            </div>
+                        </div>
+                        @if(leader != None){
+                            <div class='aside_opts financing_states'>
+                                <div class='option_title'>领投人</div>
+                                <div class='option_content'>
+                                    <div class="investor_info">
+                                        <p><img src="@data.static/avatar/640/640/@{leader.get.memberid}@Html(".png")" width="70" height="70" id="leaderAvatar"/></p>
+                                        <h6>@leader.get.name<br />
+                                            @for(i <- jobList){
+                                                @if(i.id == leader.get.job.getOrElse(0L)){
+                                                    <span>@i.name</span>
+                                                }
+                                            }
+                                        </h6>
+                                    </div>
+                                    <p><span>公司名称：@leader.get.pcname</span></p>
+                                    <p><span>公司资产：1000万</span></p>
+                                    <p><span>认购金额：<em>@{leader.get.investmentsum}万</em></span></p>
+                                </div>
+                            </div>
+                        }
+
+                        <div class='aside_opts financing_states'>
+                            <div class='option_title'>路演信息</div>
+                            <div class='option_content'>
+                            @if(demo != None){
+                                <p>路演时间：@demo.get.activitytime.toString("yyyy-MM-dd HH:mm")</p>
+                                <p>路演地点：@demo.get.address</p>
+                                <p><a href="/demo/@item.get.id" class='btn btn-block btn-orange'>查看路演信息</a></p>
+                            }else{
+                                <p>暂无路演信息</p>
+                            }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- 报名 -->
+    <div class='layer enter' style='display:none' id="signUpBox">
+        <div class='layer_cover'></div>
+        <div class='layer_center'>
+            <div class='layer_main'>
+                <div class="close_btn"><img src="/assets/images/close_btn.png" /></div>
+                <div class='layer_title ta_c'>
+                    <p>预报名</p>
+                    <p class='ex'>请完成以下信息</p>
+                </div>
+                <div class='layer_content position-prefix'>
+                    <div class='row info_row'>
+                        <div class='col-xs-4 ta_r'>姓名：</div>
+                        <div class='col-xs-8'>
+                            <p class="input_field">
+                                <input class="form-control" id="name" name="name" value="@member.name.getOrElse("")" readonly/>
+                            </p>
+                            <p class="error_msg" id="nameError"></p>
+                        </div>
+                    </div>
+                    <div class='row info_row'>
+                        <div class='col-xs-4 ta_r'>性别：</div>
+                        <div class='col-xs-8'>
+                            <p class="input_field">
+                                <span class="radio-inline">
+                                    <input type="hidden" id="sex" name="sex" value="@member.sex.getOrElse("")"/>
+                                    <label>
+                                        @if(member.sex.getOrElse("") == "男"){
+                                            <input type="radio" id="man" name="sexs" value="男" checked="checked" disabled = disabled/> 男
+                                        }else{
+                                            <input type="radio" id="man" name="sexs" value="男" disabled="disabled"/> 男
+                                        }
+                                    </label>
+                                </span>
+                                <span class="radio-inline">
+                                    <label>
+                                        @if(member.sex.getOrElse("") == "女"){
+                                            <input type="radio" id="woman" name="sexs" value="女" checked="checked" disabled="disabled"/> 女
+                                        }else{
+                                            <input type="radio" id="woman" name="sexs" value="女" disabled="disabled"/> 女
+                                        }
+                                    </label>
+                                </span>
+                            </p>
+                            <p class="error_msg" id="sexError"></p>
+                        </div>
+                    </div>
+                    <div class='row info_row'>
+                        <div class='col-xs-4 ta_r'>手机号：</div>
+                        <div class='col-xs-8'>
+                            <p class="input_field">
+                                <input type="hidden" id="phoneNum" value="@data.identity.tel" readonly/>
+                                @if(data.isAuth){
+                                    @data.identity.tel.substring(0,3)***@data.identity.tel.substring(7,11)
+                                }
+                            </p>
+                            <p class="error_msg"></p>
+                        </div>
+                    </div>
+
+                    <div class='row info_row'>
+                        <div class='col-xs-4 ta_r'>邮箱：</div>
+                        <div class='col-xs-8'>
+                            <p class="input_field">
+                                @if(member.email.getOrElse("") != ""){
+                                    <input class="form-control" id="email" name="email" value="@member.email.getOrElse("")" readonly/>
+                                }else{
+                                    <input class="form-control" id="email" name="email" value="@member.email.getOrElse("")"/>
+                                }
+                            </p>
+                            <p class="error_msg" id="emailError"></p>
+                        </div>
+                    </div>
+                    <div class='row info_row'>
+                        <div class='col-xs-4 ta_r'>公司名称：</div>
+                        <div class='col-xs-8'>
+                            <p class="input_field">
+                                @if(member.pcname.getOrElse("") != ""){
+                                    <input class="form-control" id="pcname" name="pcname" value="@member.pcname.getOrElse("")" readonly/>
+                                }else{
+                                    <input class="form-control" id="pcname" name="pcname" value="@member.pcname.getOrElse("")"/>
+                                }
+                            </p>
+                            <p class="error_msg" id="pcnameError"></p>
+                        </div>
+                    </div>
+                    <div class='row info_row'>
+                        <div class='col-xs-4 ta_r'>职位：</div>
+                        <div class='col-xs-8'>
+                            <p class="input_field">
+                                <input type="hidden" id="job" name="job" value="@member.job.getOrElse(0)"/>
+                                <select class="form-control" id="jobs" name="jobs" @if(member.job.getOrElse(0)!=0){disabled="disabled"}>
+                                    @for(i <- jobList){
+                                        @if(i.id == member.job.getOrElse(0)){
+                                            <option value="@i.id" selected="selected">--@i.name--</option>
+                                        }else{
+                                            <option value="@i.id">--@i.name--</option>
+                                        }
+                                    }
+                                </select>
+                            </p>
+                            <p class="error_msg" id="jobError"></p>
+                        </div>
+                    </div>
+                    <div class='row info_row'>
+                        <div class='col-xs-4 ta_r'>手机验证码：</div>
+                        <div class='col-xs-8'>
+                            <p class="input_field justify">
+                                <input placeholder="短信验证码" class="form-control form-block-inline" id="signCode" name="signCode"/>
+                                <button class="btn btn-block btn-orange form-block-inline" id="sendCodeBtn" onclick="signSendCode();">获取验证码</button>
+                            </p>
+                            <p class="error_msg" id="signCodeError"></p>
+                        </div>
+                    </div>
+                    <div class='row info_row'>
+                        <div class='col-xs-4 ta_r'>投资金额：</div>
+                        <div class='col-xs-8'>
+                            <p class="input_field">
+                                <input class="form-control" placeholder='请填写你的预投资金额' id="money" name="money"/>
+                                <span class='input_field_ex'>万元</span>
+                            </p>
+                            <p class="error_msg" id="moneyError"></p>
+                        </div>
+                    </div>
+                    <div class='row info_row'>
+                        <div class='col-xs-4 ta_r'></div>
+                        <div class='col-xs-8'>
+                            <p class="input_field">
+                                <input type="checkbox" checked="checked">
+                                <span class='agreement'>阅读并同意
+                                    <a href="/FAQ/4/0" target="_blank">《投资风险声明书》</a>
+                                </span>
+                            </p>
+
+                            <p class="error_msg"></p>
+                        </div>
+                    </div>
+                </div>
+                <p class='ta_c'><button class='btn btn-orange layer_submit' type="button" id="investSub">确定</button></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 取消报名 -->
+    <div class='layer cancel_enter' style='display:none' id="gaveUpBox">
+        <div class='layer_cover'></div>
+        <div class='layer_center'>
+            <div class='layer_main'>
+                <div class="close_btn"><img src="/assets/images/icon/close_btn.png" /></div>
+                <div class='layer_title ta_c'>
+                    <p>取消预报名</p>
+                    <p class='ex'>投资金<em>@investMoney</em>万元</p>
+                </div>
+                <div class='layer_content'>
+                    <div class='row info_row'>
+                        <div class='col-xs-4 ta_r'>手机号：</div>
+                        <div class='col-xs-8'>
+                            <p>
+                                @if(data.isAuth){
+                                    @data.identity.tel.substring(0,3)***@data.identity.tel.substring(7,11)
+                                }
+                            </p>
+                            <p class="error_msg"></p>
+                        </div>
+                    </div>
+                    <div class='row info_row'>
+                        <div class='col-xs-4 ta_r'>手机验证码：</div>
+                        <div class='col-xs-8'>
+                            <p class="input_field justify">
+                                <input placeholder="短信验证码" class="form-control form-block-inline" id="cancelCode"/>
+                                <button class="btn btn-block btn-orange form-block-inline" id="cancelCodeBtn" onclick="cacelSendCode();">获取验证码</button>
+                            </p>
+                            <p class="error_msg" id="cancelCodeError"></p>
+                        </div>
+                    </div>
+                </div>
+                <p class='ta_c'><button class='btn btn-orange layer_submit cancel_enter_btn' id="cancelSub">确定</button></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 邀请 -->
+    <div class='layer invitation' style="display:none">
+        <div class='layer_cover'></div>
+        <div class='layer_center'>
+            <div class='layer_main'>
+                <div class="close_btn"><img src="/assets/images/icon/close_btn.png" /></div>
+                <div class='layer_title ta_c'>
+                    <p>已经复制项目链接</p>
+                </div>
+                <p class='ta_c'><button class='btn btn-orange layer_submit'>确定</button></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 邀请 -->
+    <div class='layer invitation2' id="outOK" style="display:none">
+        <div class='layer_cover'></div>
+        <div class='layer_center'>
+            <div class='layer_main'>
+                <div class="close_btn"><img src="/assets/images/icon/close_btn.png" /></div>
+                <div class='layer_title ta_c'>
+                    <p>领投人不能取消报名！</p>
+                </div>
+                <p class='ta_c'><button class='btn btn-orange layer_submit' onclick="$('#outOK').hide();">确定</button></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 报名 -->
+    <div class='layer bp_download' style="display:none" id="planBox">
+        <div class='layer_cover'></div>
+        <div class='layer_center'>
+            <div class='layer_main'>
+                <div class="close_btn"><img src="/assets/images/icon/close_btn.png" /></div>
+                <div class='layer_title ta_c'>
+                    <p>报名后才能下载商业计划书！</p>
+                </div>
+                <p class='ta_c'><button class='btn btn-orange layer_submit' id="planSure">确定</button></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 登录提示框 -->
+    <div class='layer enter_login' style='display:none'>
+        <div class='layer_cover'></div>
+        <div class='layer_center'>
+            <div class='layer_main'>
+                <div class="close_btn"><img src="/assets/images/icon/close_btn.png" /></div>
+                <div class='layer_title ta_c'>
+                    <p>登录</p>
+                    <p class='ex'>请登录后才可报名</p>
+                </div>
+                <div class='layer_content position-prefix'>
+                    <div class='row info_row'>
+                        <div class='col-xs-12'>
+                            <p class="input_field">
+                                <input class="form-control" placeholder="用户名/手机号">
+                            </p>
+                            <p class="error_msg"></p>
+                        </div>
+                    </div>
+                    <div class='row info_row'>
+                        <div class='col-xs-12'>
+                            <p class="input_field">
+                                <input class="form-control" placeholder="密码">
+                            </p>
+                            <p class="error_msg"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <p class='ta_c'><button class='btn btn-orange layer_submit'>登录</button></p>
+                <p class="pass_reg">
+                    <span><a class="forget_pwd" href="#">忘记密码？</a></span>
+                    <span><a class="reg" href="#">注册账号</a></span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 实名认证 -->
+    <div class='layer realNameExamine' style="display:none">
+        <div class='layer_cover'></div>
+        <div class='layer_center'>
+            <div class='layer_main'>
+                <div class="close_btn"><img src="/assets/images/icon/close_btn.png" /></div>
+                <div class='layer_title ta_c'>
+                    <p>需要实名认证通过后，才可以报名，请先报名！</p>
+                </div>
+                <p class='ta_c'><a href="/authView"><button class='btn btn-orange layer_submit'>实名认证</button></a></p>
+            </div>
+        </div>
+    </div>
+}

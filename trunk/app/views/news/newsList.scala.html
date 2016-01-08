@@ -1,0 +1,46 @@
+@(page:core.utils.Pages[model.News])(implicit data: core.mvc.ViewData[_])
+@data.style("stylesheets/css/information.css")(0)
+@main{
+    <div class="information_list_main">
+        <div class="container" style="padding-left: 30px;">
+            <div class="pos">
+                <p><a href="/">首页</a>/资讯</p>
+            </div>
+            <div class="info_list" style="min-height: 600px;">
+                @for(i <- page.list){
+                    <div class="info_item">
+                        <div class="info_item_des">
+                            <div class="info_img">
+                                @if(i.imgurl != null && i.imgurl != ""){
+                                    <a href="/newsInfo/@i.id"><img src="@data.static/@i.imgurl"/></a>
+                                }
+                            </div>
+                            <div class="info_title"><a href="/newsInfo/@i.id">@i.title</a><br/><span>@i.addtime.toString("yyyy年MM月dd日HH:mm")</span></div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="page">
+                <ul>
+                    @if(page.hasPreviousPage){
+                        <li class="prev"><a href="/newsList/@{page.pageNumber-1}">上一页</a></li>
+                    }else{
+                        <li class="prev disabled"><a href="javascript:;">上一页</a></li>
+                    }
+                    @for(i <- page.navigatePageNumbers){
+                        @if(page.pageNumber == i){
+                            <li class="active"><a href="javascript:;">@i</a></li>
+                        }else{
+                            <li><a href="/newsList/@i">@i</a></li>
+                        }
+                    }
+                    @if(page.hasNextPage){
+                        <li class="next last"><a href="/newsList/@{page.pageNumber}">下一页</a></li>
+                    }else{
+                        <li class="next disabled"><a href="javascript:;">下一页</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+}

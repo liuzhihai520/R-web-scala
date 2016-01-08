@@ -1,0 +1,35 @@
+@(member: Option[model.Member],types:Int)(implicit lang: Lang, data: core.mvc.ViewData[_])
+@data.script("javascripts/js/center/user/user.js")(0)
+<div class='row user_base_info'>
+    <div class="container">
+        <div class='col-xs-2'>
+            <input type="hidden" id="userId" value="@data.identity.id"/>
+            <div class='head_portrait'><img src="@data.static/avatar/640/640/@member.get.head.getOrElse("")" width="80" height="80"/></div>
+        </div>
+        <div class='col-xs-6 info_list'>
+            <div class='phone'>
+                <p>@data.identity.accountname</p>
+                @if(member.get.status.getOrElse("0").toInt == 2){<p class="certified"></p>}
+            </div>
+            <p class='info_list_2'>
+                <span class='gender'>@member.get.sex.getOrElse("未填写")</span>
+                <span class='email'>@data.identity.tel.substring(0,3)***@data.identity.tel.substring(7,11)</span>
+            </p>
+            <p>个人信息完成</p>
+            <div class='process_bar_yellow'>
+                @if(data.progress > 0){
+                    <div class='current' style="width:@{data.progress}@Html("0%")"></div>
+                }else{
+                    <div class='current' style="width:0%"></div>
+                }
+            </div>
+        </div>
+        <div class='col-xs-4 right_operation'>
+            @if(types == 0){
+                <a href="/userView"><span class='glyphicon glyphicon-cog'></span>编辑个人资料</a>
+            }else{
+                <a href="/center"><span class='glyphicon glyphicon-cog'></span>退出编辑</a>
+            }
+        </div>
+    </div>
+</div>

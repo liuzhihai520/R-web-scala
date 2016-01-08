@@ -1,0 +1,75 @@
+@(item:Option[model.ItemProject],demo:Option[model.Demo])(implicit data: core.mvc.ViewData[_])
+@data.style("stylesheets/css/page980.css")(0)
+@data.style("stylesheets/css/project.css")(1)
+@main{
+    <div class='content'>
+        <div class='wrapper clearfix'>
+            <h2 class='project_name'>@item.get.name</h2>
+            <p class='project_info'>
+                <span class='info_item location'><i class='icon icon_location'></i>@item.get.location</span>
+                <span class='info_item industry'><i class='icon icon_tag top-1'></i>@item.get.tag</span>
+            </p>
+            <h3 class='project_des'>@Html(item.get.synopsis.getOrElse(""))</h3>
+            <div class='page980_main_box project_main_box roadShow_main_box clearfix'>
+                <div class='img_container'>
+                    <img src='@data.static/@item.get.imgurl'>
+                </div>
+                <div class='content_container'>
+                    <p class='status_item' style="margin-top: 15px;">@if(item.get.sign != 0){认缴人数：@{item.get.sign}人}</p>
+                    <p class='status_item' style="margin-top: 15px;">计划融资：<big>@{item.get.financingsum}</big>万元</p>
+                    <p class='status_item' style="margin-top: 15px;">已认购金额：<big>@{item.get.financingamount}</big>万元 </p>
+                    <p class="status_item" style="margin-top: 15px;">起投金额：<big>@item.get.startnum.getOrElse(0)</big>万元</p>
+                    <p class='status_item' style="margin-top: 15px;">报名剩余：
+                        @if(item.get.status.equals("5") || (item.get.endtime.get.getMillis - System.currentTimeMillis()) < 0){
+                            <big>0</big>天
+                        }else{
+                            <big>@item.get.day</big>天
+                        }</p>
+                    <div class='process_bar' data-value='@{item.get.schedules}'>
+                        <div class='current' style="width: @{item.get.schedules}%"></div>
+                    </div>
+                    <p class='process_bar_tag'>已融：@{item.get.schedules}%</p>
+                    <div class="share" id="share">
+                        <div id="shareSpan"><span>分享：&nbsp;</span></div>
+                        <div class="bdsharebuttonbox">
+                            <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+                            <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+                            <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                            <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+                        </div>
+                        <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"@{item.get.name}-来自于@Html("@睿就投")","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+                    </div>
+                    @{
+                        if(item.get.status.equals("4") && (item.get.endtime.get.getMillis - System.currentTimeMillis()) > 0){
+                            <div class='status_tag'><span>融资中</span></div>
+                        }else{
+                            <div class='status_gray'><span>已结束</span></div>
+                        }
+                    }
+                </div>
+            </div>
+            <div class='page980_pannel project_pannel'>
+                <div class='wrapper_left'>
+                    <div class='main'>
+                        <div class='pannel_title'>
+                            路演详情
+                        </div>
+                        <div class='pannel_content'>
+                            @Html(demo.get.content)
+                        </div>
+                    </div>
+                </div>
+                <div class='wrapper_right'>
+                    <div class='aside_opts roadShow_info'>
+                        <div class='option_title'>路演信息</div>
+                        <div class='option_content'>
+                            <p>路演时间：@demo.get.activitytime.toString("yyyy-MM-dd HH:mm")</p>
+                            <p>路演地点：</p>
+                            <p>@demo.get.address</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,28 @@
+.content{
+	background:url(../../images/appWaiting.jpg) rgb(249,249,249) bottom center no-repeat;
+	height:900px;
+}
+.content .download {
+	width:380px;
+	margin:0 auto;
+	padding-top:310px;
+}
+.content .download .code1 {
+	float:left;
+}
+.content .download .code2 {
+	float:right;
+}
+.content .download span {
+	background:#fff;
+	padding:7px;
+	display:block;
+}
+.content .download span img {
+	width:106px;
+	height:106px;
+}
+.content .download p {
+	text-align:center;
+	margin-top:15px;
+}

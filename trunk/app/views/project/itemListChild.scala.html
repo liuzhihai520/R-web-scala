@@ -1,0 +1,65 @@
+@import org.joda.time.DateTime
+@(page: core.utils.Pages[model.ItemProject],itemArray:String)(implicit data: core.mvc.ViewData[_])
+@data.script("javascripts/js/project/test.js")(0)
+<input type="hidden" id="sysTime" value="@{new DateTime().toString("yyyy/MM/dd HH:mm:ss")}"/>
+<input type="hidden" id="childItemArray" value="@itemArray"/>
+@for(i <- page.list){
+    <li class='col-xs-4'>
+        <div class='thumbnail'>
+            <div class='img_container'>
+                <a href="/item/@i.id"><img src="@data.static/@i.imgurl"/></a>
+            </div>
+            <div class='content_container'>
+                <p class='project_name bold'>
+                    <a href="/item/@i.id">
+                    @if(i.name.length > 20){
+                        @i.name.substring(0,20)...
+                    }else{
+                        @i.name
+                    }
+                    </a>
+                </p>
+                <p class='project_des'>
+                @if(i.synopsis.getOrElse("").length > 63){
+                    @Html(i.synopsis.getOrElse("").substring(0,60))...
+                }else{
+                    @Html(i.synopsis.getOrElse(""))
+                }
+                </p>
+                <p class="current_process itemInfo">
+                @{
+                    if(i.status.equals("4") && (i.endtime.get.getMillis - System.currentTimeMillis()) > 0){
+                            <span>融资中</span>
+                    }else{
+                            <span>已结束</span>
+                    }
+                }
+                </p>
+                <p class="remain_day itemFontSize">
+                    报名剩余:<a class="countTime" id="childItemId@i.id">0天0小时0分0秒</a>
+                </p>
+                <div class='process_bar' data-value='@{i.schedules}'>
+                    <div class='current' style="width: @{i.schedules}%"></div>
+                </div>
+                <div class="col-xs-12">
+                    <table class="table detail_info_table">
+                        <tbody>
+                            <tr class="itemName">
+                                <td class="itemprogress">@{i.schedules}%</td>
+                                <td>@{i.financingsum}万</td>
+                                <td style="float: right;">@{i.sign}</td>
+                            </tr>
+                            <tr>
+                                <th>已达</th>
+                                <th>目标金额</th>
+                                <th style="float: right;">认筹人数</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </li>
+}
+<input type="hidden" id="hasNext" value="@page.hasNextPage"/>
+<input type="hidden" id="pageNumber" value="@{page.pageNumber+1}"/>

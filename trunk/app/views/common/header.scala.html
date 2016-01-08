@@ -1,0 +1,38 @@
+@()(implicit lang: Lang, data: core.mvc.ViewData[_])
+<div class="navbar navbar-default navbar-page">
+    <div class="container">
+        <div class="navbar-header">
+            <button data-target=".navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle collapsed">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/"></a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left" style="font-size: 14px">
+              <li @if(data.topIdex == 1){class='current'}><a href="/">首页</a></li>
+              <li @if(data.topIdex == 2){class='current'}><a href="/itemList">项目精选</a></li>
+              <li @if(data.topIdex == 3){class='current'}><a href="/center">我的账户</a></li>
+              <li @if(data.topIdex == 4){class='current'}><a href="/APP">APP下载</a></li>
+              <li @if(data.topIdex == 5){class='current'}><a href="/FAQ">平台答疑</a></li>
+              <li @if(data.topIdex == 6){class='current'}><a href="/aboutUs">关于我们</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="font-size: 12px">
+            @if(data.isAuth){
+                <li>
+                    <a href="/center">
+                        <span style="color:#fdce49">@data.identity.accountname</span>
+                        @if(data.isMauth){<img src="/assets/images/icon/certified.png" alt="" style="padding-left: 5px;"/>}
+                    </a>
+                </li>
+                <li><a href="/logout">安全退出</a></li>
+            }else{
+                <li><a href="/regLogin">登录</a></li>
+                <li><a href="/regLogin">注册</a></li>
+            }
+            </ul>
+        </div>
+    </div>
+</div>

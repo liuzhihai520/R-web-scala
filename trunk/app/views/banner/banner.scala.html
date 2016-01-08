@@ -1,0 +1,35 @@
+@(banner:model.Banner)(implicit data: core.mvc.ViewData[_])
+@data.style("stylesheets/css/information.css")(0)
+@data.style("stylesheets/css/page980.css")(1)
+@data.script("javascripts/js/tipBox.js")(2)
+@data.script("javascripts/js/activity/activity.js")(2)
+<script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+@main{
+    <div class='content'>
+        <div class='wrapper clearfix'>
+            <p class='location_nav'>
+                <span><a href='###'>首页</a> ／</span> @banner.title
+            </p>
+            <div class='page980_pannel information_pannel' STYLE="width: 100%;">
+                <div class='wrapper_left' STYLE="width: 100%;">
+                    <div class='main' STYLE="width: 100%;">
+                        <div class='pannel_title' STYLE="width: 100%;">
+                            <div class='row'>
+                                <h1 class='col-xs-12'>@banner.title</h1>
+                            </div>
+                            <div class='sub_info row'>
+                                <div class='col-xs-8 sub_info_left no-padding'>@banner.addtime.toString("YYYY年MM月dd日 hh:mm") </div>
+                                <div class='col-xs-4 sub_info_right no-padding'><p class='share'></p></div>
+                            </div>
+                            <p class='pannel_tag'></p>
+
+                        </div>
+                        <div class='pannel_content' STYLE="width: 100%;">
+                            @Html(banner.content)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,196 @@
+@(regForm: Form[form.RegForm],loginForm: Form[form.LoginForm],forgetForm:Form[form.ForgetForm])(implicit lang: Lang, data: core.mvc.ViewData[_])
+@data.style("stylesheets/css/login.css")(0)
+@data.style("stylesheets/css/passStrength.css")(1)
+@data.script("javascripts/js/jquery.cookie.js")(0)
+@data.script("javascripts/js/eyes/zepto.custom.js")(1)
+@data.script("javascripts/js/eyes/hideShowPassword.min.js")(2)
+@data.script("javascripts/js/eyes/modernizr.custom.js")(3)
+@data.script("javascripts/js/login/login.js")(4)
+@data.script("javascripts/js/passStrength.js")(5)
+@main{
+  <div class='content'>
+      <div class='main_box row'>
+          <!-- 登陆框-->
+          <div class='login_box col-xs-6'>
+              <p class='box_title'>登录</p>
+              <div class="form-group">
+                  <p class='input_field'>
+                      <input class="form-control" placeholder="用户名/手机号" id="username" name="username"/>
+                  </p>
+                  <p class='error_msg' id="usernameError"></p>
+              </div>
+              <div class="form-group">
+                  <p class='input_field'>
+                      <input type="password" class="form-control" placeholder="密码" id="password" name="password"/>
+                  </p>
+                  <p class='error_msg' id="passwordError"></p>
+              </div>
+              <div class="form-group" style="display: none;" id="codebox">
+                  <p class='input_field justify'>
+                      <input class="form-control form-block-inline" placeholder="验证码" id="code" name="code"/>
+                      <img src="/getCaptcha" height="40" class='form-block-inline1' id="logCaptcha" style="width: 120px ; margin-left: 20px ;"/>
+                      <a href="javascript:;" id="logReflush" style="font-size: 12px ;">换一换</a>
+                  </p>
+                  <p class='error_msg' id="codeError"></p>
+              </div>
+              <button type="button" class="btn btn-block btn-orange" id="login">登录</button>
+              <p class='box_control'><a href="javascript:;">忘记密码？</a></p>
+          </div>
+
+          <!-- 注册框-->
+          <div class='regist_box col-xs-6'>
+              <p class='box_title'>注册</p>
+              <form action="/reg" id="regForm" name="regForm" method="post">
+                  <div class="form-group">
+                      <p class='input_field'>
+                          <input class="form-control" placeholder="用户名" id="account" name="account" maxlength="18"/>
+                      </p>
+                      @{
+                          if(regForm("account").hasErrors) {
+                                  <p class='error_msg' id="accountError">账号格式不正确</p>
+                          }else if(regForm("isAccountError").hasErrors){
+                                  <p class='error_msg' id="accountError">账号已注册</p>
+                          }else{
+                                  <p class='error_msg' id="accountError"></p>
+                          }
+                      }
+                  </div>
+                  <div class="form-group">
+                      <p class='input_field'>
+                        <input class="form-control" placeholder="手机号" id="tel" name="tel" maxlength="15"/>
+                      </p>
+                      @{
+                          if(regForm("tel").hasErrors) {
+                                <p class='error_msg' id="regPhoneError">手机格式不正确</p>
+                          }else if(regForm("isTelError").hasErrors){
+                                <p class='error_msg' id="regPhoneError">手机号已注册</p>
+                          }else{
+                                <p class='error_msg' id="regPhoneError"></p>
+                          }
+                      }
+                  </div>
+                  <div class="form-group">
+                      <p class='input_field'>
+                        <input class="form-control" type="password" placeholder="设置你的密码" id="regPassword" name="regPassword" maxlength="18"/>
+                        <span class="ywz_zhuce_huixian" id='pwdLevel_1'> </span>
+                        <span class="ywz_zhuce_huixian" id='pwdLevel_2'> </span>
+                        <span class="ywz_zhuce_huixian" id='pwdLevel_3'> </span>
+                        <span class="ywz_zhuce_hongxianwenzi"> 弱</span>
+                        <span class="ywz_zhuce_hongxianwenzi"> 中</span>
+                        <span class="ywz_zhuce_hongxianwenzi"> 强</span>
+                      </p>
+                      @{
+                          if(regForm("regPassword").hasErrors) {
+                              <p class='error_msg' id="regPwdError">密码格式为6-16位字符</p>
+                          }else{
+                              <p class='error_msg' id="regPwdError"></p>
+                          }
+                      }
+                  </div>
+                  <div class="form-group">
+                      <p class='input_field'>
+                          <input class="form-control form-block-inline" placeholder="验证码" id="regCode" name="regCode"/>
+                          <img src="/getCaptcha" height="40" class='form-block-inline1' id="captcha" style="width: 120px;margin-left: 20px;"/>
+                          <a href="javascript:;" id="reflush" style="font-size: 12px;">换一换</a>
+                      </p>
+                      @{
+                          if(regForm("regCodeError").hasErrors){
+                                  <p class='error_msg' id="regCodeError">验证码错误</p>
+                          }else{
+                                  <p class='error_msg' id="regCodeError"></p>
+                          }
+                      }
+                  </div>
+                  <div class="form-group">
+                      <p class='input_field justify'>
+                        <input class="form-control form-block-inline" placeholder="短信验证码" id="sortCode" name="sortCode"/>
+                        <button type="button" class="btn btn-block btn-orange form-block-inline" onclick="getCode();" id="codeButton">获取验证码</button>
+                      </p>
+                      @{
+                          if(regForm("regPhoneCodeError").hasErrors){
+                              <p class='error_msg' id="regPhoneCodeError">短信验证码错误</p>
+                          }else if(regForm("regPhoneCodeError").hasErrors){
+                              <p class='error_msg' id="regPhoneCode60Error">短信验证码错误</p>
+                          }else{
+                              <p class='error_msg' id="regPhoneCodeError"></p>
+                          }
+                      }
+                  </div>
+                  <div class="checkbox agreement">
+                      <label class='input_field'>
+                          <input type="checkbox" id="agree" name="agree"/>
+                          同意成为会员并遵循<a href="/FAQ/2/0" target="_blank">《睿就投会员服务协议》</a>
+                      </label>
+                      <p class='error_msg' id="agreeError"></p>
+                  </div>
+                  <button type="button" class="btn btn-block btn-green" id="regSub">注册</button>
+              </form>
+          </div>
+          <!-- 找回密码框-->
+          <div class='forgetpwd_box col-xs-6'>
+              <p class='box_title'>找回密码</p>
+              <form action="/forget" id="forgetForm" name="forgetForm" method="post">
+                  <div class="form-group">
+                      <p class='input_field'>
+                          <input class="form-control" placeholder="手机号" id="forgetPhone" name="forgetPhone"/>
+                      </p>
+                      @{
+                          if(forgetForm("forgetPhone").hasErrors){
+                               <p class='error_msg' id="forgetPhoneError">手机号码格式不正确</p>
+                          }else if(forgetForm("forgetPhoneError").hasErrors){
+                               <p class='error_msg' id="forgetPhoneError">手机号码未注册</p>
+                          }else{
+                               <p class='error_msg' id="forgetPhoneError"></p>
+                          }
+                      }
+                  </div>
+                  <div class="form-group">
+                      <p class='input_field'>
+                          <input type="password" class="form-control" placeholder="设置你的新密码" id="newPassword" name="newPassword"/>
+                      </p>
+                      @{
+                          if(forgetForm("newPassword").hasErrors){
+                                  <p class='error_msg' id="newPasswordError">密码格式错误</p>
+                          }else {
+                                  <p class='error_msg' id="newPasswordError"></p>
+                          }
+                      }
+                  </div>
+                  <div class="form-group">
+                      <p class='input_field justify'>
+                          <input class="form-control form-block-inline" placeholder="验证码" id="forgetCode" name="forgetCode"/>
+                          <img src="/getCaptcha" height='40' class='form-block-inline1' id="forgetCaptcha" style="width: 120px;margin-left: 20px;"/>
+                          <a href="javascript:;" id="reflushCode" style="font-size: 12px;">换一换</a>
+                      </p>
+                      @{
+                          if(forgetForm("forgetCode").hasErrors){
+                                  <p class='error_msg' id="forgetCodeError">验证码错误</p>
+                          }else if(forgetForm("forgetCodeError").hasErrors){
+                                  <p class='error_msg' id="forgetCodeError">验证码错误</p>
+                          }else{
+                                  <p class='error_msg' id="forgetCodeError"></p>
+                          }
+                      }
+                  </div>
+                  <div class="form-group">
+                      <p class='input_field justify'>
+                          <input class="form-control form-block-inline" placeholder="短信验证码" id="forgetPhoneCode" name="forgetPhoneCode"/>
+                          <button type="button" class="btn btn-block btn-orange form-block-inline"  onclick="forgetCodes();" id="forgetCodeButton">获取验证码</button>
+                      </p>
+                      @{
+                          if(forgetForm("forgetPhoneCode").hasErrors){
+                                  <p class='error_msg' id="forgetPhoneCodeError">短信验证码格式错误</p>
+                          }else if(forgetForm("phoneCodeError").hasErrors){
+                                  <p class='error_msg' id="forgetPhoneCodeError">短信验证码错误</p>
+                          }else{
+                                  <p class='error_msg' id="forgetPhoneCodeError"></p>
+                          }
+                      }
+                  </div>
+                  <button type="button" class="btn btn-block btn-green" id="forgetSub">提交</button>
+              </form>
+          </div>
+      <div class='break_line'></div>
+    </div>
+  </div>
+}
